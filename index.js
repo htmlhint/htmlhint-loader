@@ -55,15 +55,21 @@ function defaultFormatter(messages) {
   return output.trim();
 }
 
-function lint(source, config, webpack) {
+function lint(source, options, webpack) {
+
+  if (options.rules) {
+    options.rules.forEach(function(rule) {
+      HTMLHint.addRule(rule);
+    });
+  }
 
   var report = HTMLHint.verify(source, htmlHintConfig);
   if (report.length > 0) {
-    var messages = config.formatter(report);
+    var messages = options.formatter(report);
 
     webpack.emitError(messages);
 
-    if (config.failOnError) {
+    if (options.failOnError) {
       throw new Error('Module failed because of a htmlhint error.');
     }
 
@@ -72,10 +78,11 @@ function lint(source, config, webpack) {
 
 module.exports = function(source) {
 
-  var config = assign(
+  var options = assign(
     {  // loader defaults
       formatter: defaultFormatter,
-      failOnError: false
+      failOnError: false,
+      rules: []
     },
     htmlHintConfig, //htmlhint default rules
     this.options.htmlhint || {}, // user defaults
@@ -84,7 +91,7 @@ module.exports = function(source) {
 
   this.cacheable();
 
-  lint(source, config, this);
+  lint(source, options, this);
 
   return source;
 
