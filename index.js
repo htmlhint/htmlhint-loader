@@ -16,28 +16,27 @@ if (fs.existsSync(configFile)) {
   }
 }
 
-function formatMessages(messages) {
+function formatMessage(message) {
 
-  return messages.map(function(message) {
-    var evidence = message.evidence;
-    var line = message.line;
-    var col = message.col;
-    var detail = typeof message.line !== 'undefined' ?
-      chalk.yellow('L' + line) + chalk.red(':') + chalk.yellow('C' + col) : chalk.yellow('GENERAL');
+  var evidence = message.evidence;
+  var line = message.line;
+  var col = message.col;
+  var detail = typeof message.line !== 'undefined' ?
+  chalk.yellow('L' + line) + chalk.red(':') + chalk.yellow('C' + col) : chalk.yellow('GENERAL');
 
-    if (col === 0) {
-      evidence = chalk.red('?') + evidence;
-    } else if (col > evidence.length) {
-      evidence = chalk.red(evidence + ' ');
-    } else {
-      evidence = evidence.slice(0, col - 1) + chalk.red(evidence[col - 1]) + evidence.slice(col);
-    }
+  if (col === 0) {
+    evidence = chalk.red('?') + evidence;
+  } else if (col > evidence.length) {
+    evidence = chalk.red(evidence + ' ');
+  } else {
+    evidence = evidence.slice(0, col - 1) + chalk.red(evidence[col - 1]) + evidence.slice(col);
+  }
 
-    return {
-      message: chalk.red('[') + detail + chalk.red(']') + chalk.yellow(' ' + message.message) + ' (' + message.rule.id + ')',
-      evidence: evidence
-    };
-  });
+  return {
+    message: chalk.red('[') + detail + chalk.red(']') + chalk.yellow(' ' + message.message) + ' (' + message.rule.id + ')',
+    evidence: evidence
+  };
+
 }
 
 function defaultFormatter(messages) {
@@ -47,9 +46,10 @@ function defaultFormatter(messages) {
 
   var output = chalk.cyan(errorCount) + ' error' + plural + ' found ';
 
-  formatMessages(messages).forEach(function(data) {
-    output += data.message + '\n';
-    output += data.evidence + '\n';
+  messages.forEach(function(message) {
+    var formatted = formatMessage(message);
+    output += formatted.message + '\n';
+    output += formatted.evidence + '\n';
   });
 
   return output.trim();
