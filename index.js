@@ -61,9 +61,7 @@ function lint(source, config, webpack) {
   if (report.length > 0) {
     var messages = config.formatter(report);
 
-    if (config.emitError) {
-      webpack.emitError(messages);
-    }
+    webpack.emitError(messages);
 
     if (config.failOnError) {
       throw new Error('Module failed because of a htmlhint error.');
@@ -77,7 +75,6 @@ module.exports = function(source) {
   var config = assign(
     {  // loader defaults
       formatter: defaultFormatter,
-      emitError: false,
       failOnError: false
     },
     htmlHintConfig, //htmlhint default rules
