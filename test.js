@@ -1,3 +1,9 @@
+var blanket = require('blanket');
+blanket({
+  pattern: function(filename) {
+    return !/node_modules/.test(filename);
+  }
+});
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
