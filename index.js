@@ -45,8 +45,8 @@ function lint(source, options, webpack, done) {
 
   try {
 
-    if (options.rules) {
-      options.rules.forEach(function(rule) {
+    if (options.customRules) {
+      options.customRules.forEach(function(rule) {
         HTMLHint.addRule(rule);
       });
     }
@@ -111,7 +111,7 @@ module.exports = function(source) {
       emitAs: null, //can be either warning or error
       failOnError: false,
       failOnWarning: false,
-      rules: [],
+      customRules: [],
       configFile: '.htmlhintrc'
     },
     this.options.htmlhint || {}, // user defaults
