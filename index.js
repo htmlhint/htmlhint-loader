@@ -41,10 +41,7 @@ function formatMessage(message) {
 
 function defaultFormatter(messages) {
 
-  var errorCount = messages.length;
-  var plural = errorCount === 1 ? '' : 's';
-
-  var output = chalk.cyan(errorCount) + ' error' + plural + ' found ';
+  var output = '';
 
   messages.forEach(function(message) {
     var formatted = formatMessage(message);
@@ -65,12 +62,43 @@ function lint(source, options, webpack) {
 
   var report = HTMLHint.verify(source, htmlHintConfig);
   if (report.length > 0) {
-    var messages = options.formatter(report);
 
-    webpack.emitError(messages);
+    var reportByType = {
+      warning: report.filter(function(message) {
+        return message.type === 'warning'
+      }),
+      error: report.filter(function(message) {
+        return message.type === 'error'
+      })
+    };
 
-    if (options.failOnError) {
-      throw new Error('Module failed because of a htmlhint error.');
+    var emitter;
+    if (options.emitAs === 'error') {
+      emitter = webpack.emitError;
+    } else if (options.emitAs === 'warning') {
+      emitter = webpack.emitWarning;
+    }
+
+    if (reportByType.warning.length > 0) {
+
+      var warning = options.formatter(reportByType.warning);
+      emitter ? emitter(warning) : webpack.emitWarning(warning);
+
+    }
+
+    if (reportByType.error.length > 0) {
+
+      var error = options.formatter(reportByType.error);
+      emitter ? emitter(error) : webpack.emitError(error);
+
+      if (options.failOnError) {
+        throw new Error('Module failed because of a htmlhint error.');
+      }
+
+    }
+    
+    if (reportByType.warning.length > 0 && options.failOnWarning) {
+      throw new Error('Module failed because of a htmlhint warning.');
     }
 
   }
@@ -81,7 +109,9 @@ module.exports = function(source) {
   var options = assign(
     {  // loader defaults
       formatter: defaultFormatter,
+      emitAs: null, //can be either warning or error
       failOnError: false,
+      failOnWarning: false,
       rules: []
     },
     htmlHintConfig, //htmlhint default rules
