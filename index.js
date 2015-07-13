@@ -136,7 +136,7 @@ module.exports = function(source) {
 
     } else {
 
-      lint(source, assign(options, HTMLHint.defaultRuleset), webpack, done);
+      lint(source, options, webpack, done);
 
     }
 

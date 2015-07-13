@@ -137,21 +137,6 @@ describe('htmlhint loader', function() {
       originalReadFile = fsStub.readFile;
     });
 
-    it('should use the default set of htmlhint rules if no options files is passed', function() {
-      htmlHintLoader.call(prototype, inputString);
-      expect(verifyArgs.options.defaultRule).to.eql(htmlhintStub.HTMLHint.defaultRuleset.defaultRule);
-    });
-
-    it('should use the default set of htmlhint rules if the options file passed does not exist', function() {
-      prototype.options = {
-        htmlhint: {
-          configFile: '.htmlhintrc'
-        }
-      };
-      htmlHintLoader.call(prototype, inputString);
-      expect(verifyArgs.options.defaultRule).to.eql(htmlhintStub.HTMLHint.defaultRuleset.defaultRule);
-    });
-
     it('should return an error if there was an error reading the config file', function() {
       var error = new Error();
 
