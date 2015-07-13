@@ -1,3 +1,7 @@
+'use strict';
+
+/*eslint-env mocha */
+
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
@@ -297,6 +301,5 @@ describe('htmlhint loader', function() {
     });
 
   });
-
 
 });

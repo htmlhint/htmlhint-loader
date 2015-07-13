@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "coverage": "istanbul cover -x **test** _mocha -- -R spec"
+    "coverage": "istanbul cover -x **test** _mocha -- -R spec",
+    "lint": "eslint index.js test.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,8 @@
   },
   "devDependencies": {
     "chai": "~3.0.0",
+    "eslint": "~0.24.1",
+    "eslint-config-mwl": "~0.1.0",
     "istanbul": "~0.3.17",
     "mocha": "~2.2.5",
     "proxyquire": "~1.6.0",

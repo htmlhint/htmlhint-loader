@@ -1,0 +1,9 @@
+{
+  "extends": "mwl",
+  "rules": {
+    "no-unused-expressions": 0
+  },
+  "env": {
+    "node": true
+  }
+}

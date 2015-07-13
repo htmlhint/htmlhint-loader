@@ -1,3 +1,5 @@
+'use strict';
+
 var HTMLHint = require('htmlhint').HTMLHint;
 var loaderUtils = require('loader-utils');
 var assign = require('object-assign');
@@ -56,10 +58,10 @@ function lint(source, options, webpack, done) {
 
       var reportByType = {
         warning: report.filter(function(message) {
-          return message.type === 'warning'
+          return message.type === 'warning';
         }),
         error: report.filter(function(message) {
-          return message.type === 'error'
+          return message.type === 'error';
         })
       };
 
@@ -99,7 +101,6 @@ function lint(source, options, webpack, done) {
   } catch (e) {
     done(e);
   }
-
 
 }
 
