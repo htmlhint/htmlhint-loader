@@ -138,7 +138,7 @@ module.exports = function(source) {
         try {
           var htmlHintConfig = JSON.parse(configString);
         } catch (e) {
-          done(new Error('Could not parse the htmlhint config file'));
+          return done(new Error('Could not parse the htmlhint config file'));
         }
 
         lint(source, assign(options, htmlHintConfig), webpack, done);

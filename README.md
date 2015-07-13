@@ -2,6 +2,6 @@
 A webpack loader for htmlhint
 
 ## To do
-* Tests
 * Docs
+* Examples
 * Publish to npm!
