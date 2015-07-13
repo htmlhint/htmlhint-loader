@@ -4,7 +4,7 @@
   "description": "A webpack loader for htmlhint",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "npm run lint && mocha",
     "coverage": "istanbul cover -x **test** _mocha -- -R spec",
     "lint": "eslint index.js test.js"
   },
