@@ -1,12 +1,12 @@
 # htmlhint-loader
 
+> A webpack loader for htmlhint
+
 [![npm version](https://badge.fury.io/js/htmlhint-loader.svg)](http://badge.fury.io/js/htmlhint-loader)
 [![Build Status](https://travis-ci.org/mattlewis92/htmlhint-loader.svg)](https://travis-ci.org/mattlewis92/htmlhint-loader)
 [![Coverage Status](https://coveralls.io/repos/mattlewis92/htmlhint-loader/badge.svg?branch=master&service=github)](https://coveralls.io/github/mattlewis92/htmlhint-loader?branch=master)
 [![Dependency Status](https://david-dm.org/mattlewis92/htmlhint-loader.svg)](https://david-dm.org/mattlewis92/htmlhint-loader)
 [![devDependency Status](https://david-dm.org/mattlewis92/htmlhint-loader/dev-status.svg)](https://david-dm.org/mattlewis92/htmlhint-loader#info=devDependencies)
-
-> A webpack loader for htmlhint
 
 ## To do
 * Examples
