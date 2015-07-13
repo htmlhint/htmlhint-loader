@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "coverage": "mocha -R html-cov > coverage.html"
+    "coverage": "istanbul cover -x **test** _mocha -- -R spec"
   },
   "repository": {
     "type": "git",
@@ -32,8 +32,8 @@
     "object-assign": "~3.0.0"
   },
   "devDependencies": {
-    "blanket": "~1.1.7",
     "chai": "~3.0.0",
+    "istanbul": "~0.3.17",
     "mocha": "~2.2.5",
     "sinon-chai": "~2.8.0"
   }
