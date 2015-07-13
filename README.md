@@ -19,7 +19,7 @@ module.exports = {
     preLoaders: [
       {
         test: /\.html/, 
-        loader: 'htmlhint-loader', 
+        loader: 'htmlhint', 
         exclude: /node_modules/
       }
     ]
@@ -39,7 +39,7 @@ You can directly pass some [htmlhint rules](https://github.com/yaniswang/HTMLHin
     preLoaders: [
       {
         test: /\.html/,
-        loader: 'eslint-loader?{tagname-lowercase: true}',
+        loader: 'htmlhint?{tagname-lowercase: true}',
         exclude: /node_modules/,
       },
     ],
