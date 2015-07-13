@@ -65,29 +65,17 @@ function lint(source, options, webpack, done) {
         })
       };
 
-      var emitter;
+      var emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
       if (options.emitAs === 'error') {
         emitter = webpack.emitError;
       } else if (options.emitAs === 'warning') {
         emitter = webpack.emitWarning;
       }
 
-      if (reportByType.warning.length > 0) {
+      emitter(options.formatter(report));
 
-        var warning = options.formatter(reportByType.warning);
-        emitter ? emitter(warning) : webpack.emitWarning(warning);
-
-      }
-
-      if (reportByType.error.length > 0) {
-
-        var error = options.formatter(reportByType.error);
-        emitter ? emitter(error) : webpack.emitError(error);
-
-        if (options.failOnError) {
-          throw new Error('Module failed because of a htmlhint error.');
-        }
-
+      if (reportByType.error.length > 0 && options.failOnError) {
+        throw new Error('Module failed because of a htmlhint error.');
       }
 
       if (reportByType.warning.length > 0 && options.failOnWarning) {
