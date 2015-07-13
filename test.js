@@ -51,7 +51,15 @@ describe('htmlhint loader', function() {
     errorResult = [{
       type: 'error',
       evidence: '',
-      rule: {}
+      rule: {},
+      line: 10,
+      col: 0
+    }, {
+      type: 'error',
+      evidence: '',
+      rule: {},
+      line: 10,
+      col: 10
     }];
     warningResult = [{
       type: 'warning',
