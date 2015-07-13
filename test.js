@@ -1,14 +1,43 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
+var proxyquire = require('proxyquire');
+
 chai.use(sinonChai);
-var htmlHintLoader = require('./index');
 var assert = chai.assert;
 var expect = chai.expect;
 
+var htmlhintStub = {
+  HTMLHint: {
+    verify: sinon.stub(),
+    addRule: sinon.stub()
+  }
+};
+
+function requireLib(config) {
+  config = config || {};
+  config.configFileExists = config.configFileExists || false;
+  var fsStub = {
+    exists: function(path, callback) {
+      callback(config.configFileExists);
+    },
+    readFile: function(path, callback) {
+      if (config.readConfigError) {
+        return callback(config.readConfigError);
+      }
+      callback(null, config.configFileContents);
+    }
+  };
+  proxyquire('./index', {
+    htmlhint: htmlhintStub,
+    fs: fsStub
+  });
+  return require('./index');
+}
+
 describe('htmlhint loader', function() {
 
-  var prototype, callback;
+  var prototype, callback, htmlHintLoader;
   beforeEach(function() {
     callback = sinon.spy();
     prototype = {
@@ -17,6 +46,7 @@ describe('htmlhint loader', function() {
       async: sinon.stub().returns(callback),
       options: {}
     };
+    htmlHintLoader = requireLib();
   });
 
   it('should export a function', function() {
@@ -34,7 +64,10 @@ describe('htmlhint loader', function() {
   });
 
   it('should verify the given input html string', function() {
-    //TODO
+    htmlhintStub.HTMLHint.verify.returns([]);
+    var input = '<html></html>';
+    htmlHintLoader.call(prototype, input);
+    expect(htmlhintStub.HTMLHint.verify).to.have.been.calledWith(input);
   });
 
   describe('output', function() {
@@ -114,7 +147,17 @@ describe('htmlhint loader', function() {
     describe('customRules', function() {
 
       it('should support adding custom htmlhint rules', function() {
-        //TODO
+        var customRule = {
+          id: 'some id',
+          rule: 'a custom rule'
+        };
+        prototype.options = {
+          htmlhint: {
+            customRules: [customRule]
+          }
+        };
+        htmlHintLoader.call(prototype, '');
+        expect(htmlhintStub.HTMLHint.addRule).to.have.been.calledWith(customRule);
       });
 
     });
