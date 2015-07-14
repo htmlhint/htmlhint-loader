@@ -47,10 +47,10 @@ You can directly pass some [htmlhint rules](https://github.com/yaniswang/HTMLHin
       {
         test: /\.html/,
         loader: 'htmlhint?{tagname-lowercase: true}',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
-    ],
-  },
+    ]
+  }
 }
 ```
 
