@@ -8,10 +8,6 @@
 [![Dependency Status](https://david-dm.org/mattlewis92/htmlhint-loader.svg)](https://david-dm.org/mattlewis92/htmlhint-loader)
 [![devDependency Status](https://david-dm.org/mattlewis92/htmlhint-loader/dev-status.svg)](https://david-dm.org/mattlewis92/htmlhint-loader#info=devDependencies)
 
-## To do
-* Examples
-* Publish to npm!
-
 ## Install
 
 ```
