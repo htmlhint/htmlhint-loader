@@ -27,12 +27,8 @@ describe('htmlhint loader', function() {
     };
 
     fsStub = {
-      exists: function(path, cb) {
-        cb(false);
-      },
-      readFile: function(path, cb) {
-        cb(null, '');
-      }
+      exists: sinon.stub().callsArgWith(1, false),
+      readFile: sinon.stub().callsArgWith(1, null, '')
     };
 
     htmlHintLoader = rewire('./index');
@@ -121,10 +117,9 @@ describe('htmlhint loader', function() {
 
   describe('htmlhint rules', function() {
 
-    var originalVerify, verifyArgs, originalExists, originalReadFile;
+    var verifyArgs;
 
     beforeEach(function() {
-      originalVerify = htmlhintStub.verify;
       htmlhintStub.verify = function(input, options) {
         verifyArgs = {
           input: input,
@@ -132,20 +127,14 @@ describe('htmlhint loader', function() {
         };
         return [];
       };
-      originalExists = fsStub.exists;
-      originalReadFile = fsStub.readFile;
     });
 
     it('should return an error if there was an error reading the config file', function() {
       var error = new Error();
 
-      fsStub.exists = function(path, cb) {
-        cb(true);
-      };
+      fsStub.exists.callsArgWith(1, true);
 
-      fsStub.readFile = function(path, cb) {
-        cb(error);
-      };
+      fsStub.readFile.callsArgWith(1, error);
 
       htmlHintLoader.call(prototype, inputString);
       expect(callback).to.have.been.calledWith(error);
@@ -154,13 +143,9 @@ describe('htmlhint loader', function() {
 
     it('should return an error if there was an error parsing the config file', function() {
 
-      fsStub.exists = function(path, cb) {
-        cb(true);
-      };
+      fsStub.exists.callsArgWith(1, true);
 
-      fsStub.readFile = function(path, cb) {
-        cb(null, '{INVALID{');
-      };
+      fsStub.readFile.callsArgWith(1, null, '{INVALID{');
 
       htmlHintLoader.call(prototype, inputString);
       expect(callback).not.to.have.been.calledWith(null);
@@ -168,23 +153,12 @@ describe('htmlhint loader', function() {
 
     it('should pass in any options from the htmlhint file', function() {
 
-      fsStub.exists = function(path, cb) {
-        cb(true);
-      };
-
-      fsStub.readFile = function(path, cb) {
-        cb(null, '{"aRule": true}');
-      };
+      fsStub.exists.callsArgWith(1, true);
+      fsStub.readFile.callsArgWith(1, null, '{"aRule": true}');
 
       htmlHintLoader.call(prototype, inputString);
       expect(callback).to.have.been.calledWith(null);
       expect(verifyArgs.options.aRule).to.be.true;
-    });
-
-    afterEach(function() {
-      htmlhintStub.verify = originalVerify;
-      fsStub.exists = originalExists;
-      fsStub.readFile = originalReadFile;
     });
 
   });
