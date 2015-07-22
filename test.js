@@ -5,44 +5,43 @@
 var chai = require('chai');
 var sinon = require('sinon');
 var sinonChai = require('sinon-chai');
-var proxyquire = require('proxyquire');
+var rewire = require('rewire');
 
 chai.use(sinonChai);
 var assert = chai.assert;
 var expect = chai.expect;
 
-var htmlhintStub = {
-  HTMLHint: {
-    verify: sinon.stub().returns([]),
-    addRule: sinon.stub(),
-    defaultRuleset: {
-      defaultRule: {
-        id: 'default'
-      }
-    }
-  }
-};
-
-var fsStub = {
-  exists: function(path, callback) {
-    callback(false);
-  },
-  readFile: function(path, callback) {
-    callback(null, '');
-  }
-};
-
-proxyquire('./index', {
-  htmlhint: htmlhintStub,
-  fs: fsStub
-});
-
-var htmlHintLoader = require('./index');
-
 describe('htmlhint loader', function() {
 
-  var prototype, callback, inputString, errorResult, warningResult;
+  var prototype, callback, inputString, errorResult, warningResult, htmlHintLoader, htmlhintStub, fsStub;
   beforeEach(function() {
+
+    htmlhintStub = {
+      verify: sinon.stub().returns([]),
+      addRule: sinon.stub(),
+      defaultRuleset: {
+        defaultRule: {
+          id: 'default'
+        }
+      }
+    };
+
+    fsStub = {
+      exists: function(path, cb) {
+        cb(false);
+      },
+      readFile: function(path, cb) {
+        cb(null, '');
+      }
+    };
+
+    htmlHintLoader = rewire('./index');
+
+    htmlHintLoader.__set__({ //eslint-disable-line no-underscore-dangle
+      fs: fsStub,
+      HTMLHint: htmlhintStub
+    });
+
     callback = sinon.spy();
     prototype = {
       emitError: sinon.spy(),
@@ -70,7 +69,7 @@ describe('htmlhint loader', function() {
       evidence: '',
       rule: {}
     }];
-    htmlhintStub.HTMLHint.verify.returns([]);
+    htmlhintStub.verify.returns([]);
   });
 
   it('should export a function', function() {
@@ -91,7 +90,7 @@ describe('htmlhint loader', function() {
 
     htmlHintLoader.call(prototype, inputString);
     expect(callback).to.have.been.calledWith(null, inputString);
-    expect(htmlhintStub.HTMLHint.verify).to.have.been.calledWith(inputString);
+    expect(htmlhintStub.verify).to.have.been.calledWith(inputString);
   });
 
   describe('output', function() {
@@ -103,7 +102,7 @@ describe('htmlhint loader', function() {
     });
 
     it('should emit an error by default if there are 1 or more errors', function() {
-      htmlhintStub.HTMLHint.verify.returns(errorResult);
+      htmlhintStub.verify.returns(errorResult);
       htmlHintLoader.call(prototype, inputString);
       expect(callback).to.have.been.calledWith(null, inputString);
       expect(prototype.emitError).to.have.been.called;
@@ -111,7 +110,7 @@ describe('htmlhint loader', function() {
     });
 
     it('should emit a warning by default if there are 1 or more warnings', function() {
-      htmlhintStub.HTMLHint.verify.returns(warningResult);
+      htmlhintStub.verify.returns(warningResult);
       htmlHintLoader.call(prototype, inputString);
       expect(callback).to.have.been.calledWith(null, inputString);
       expect(prototype.emitError).not.to.have.been.called;
@@ -125,8 +124,8 @@ describe('htmlhint loader', function() {
     var originalVerify, verifyArgs, originalExists, originalReadFile;
 
     beforeEach(function() {
-      originalVerify = htmlhintStub.HTMLHint.verify;
-      htmlhintStub.HTMLHint.verify = function(input, options) {
+      originalVerify = htmlhintStub.verify;
+      htmlhintStub.verify = function(input, options) {
         verifyArgs = {
           input: input,
           options: options
@@ -183,7 +182,7 @@ describe('htmlhint loader', function() {
     });
 
     afterEach(function() {
-      htmlhintStub.HTMLHint.verify = originalVerify;
+      htmlhintStub.verify = originalVerify;
       fsStub.exists = originalExists;
       fsStub.readFile = originalReadFile;
     });
@@ -195,7 +194,7 @@ describe('htmlhint loader', function() {
     describe('formatter', function() {
 
       it('should allow a default formatter to be passed', function() {
-        htmlhintStub.HTMLHint.verify.returns(errorResult);
+        htmlhintStub.verify.returns(errorResult);
         var formatter = sinon.stub().returns('input');
         prototype.options = {
           htmlhint: {
@@ -211,7 +210,7 @@ describe('htmlhint loader', function() {
     describe('emitAs', function() {
 
       it('should always emit any output as an error if emitAs: error is true', function() {
-        htmlhintStub.HTMLHint.verify.returns(warningResult);
+        htmlhintStub.verify.returns(warningResult);
         prototype.options = {
           htmlhint: {
             emitAs: 'error'
@@ -223,7 +222,7 @@ describe('htmlhint loader', function() {
       });
 
       it('should always emit any output as a warning if emitAs: warning is true', function() {
-        htmlhintStub.HTMLHint.verify.returns(errorResult);
+        htmlhintStub.verify.returns(errorResult);
         prototype.options = {
           htmlhint: {
             emitAs: 'warning'
@@ -239,7 +238,7 @@ describe('htmlhint loader', function() {
     describe('failOnError', function() {
 
       it('should return an error to the callback if true', function() {
-        htmlhintStub.HTMLHint.verify.returns(errorResult);
+        htmlhintStub.verify.returns(errorResult);
         prototype.options = {
           htmlhint: {
             failOnError: true
@@ -254,7 +253,7 @@ describe('htmlhint loader', function() {
     describe('failOnWarning', function() {
 
       it('should return an error to the callback if true', function() {
-        htmlhintStub.HTMLHint.verify.returns(warningResult);
+        htmlhintStub.verify.returns(warningResult);
         prototype.options = {
           htmlhint: {
             failOnWarning: true
@@ -280,7 +279,7 @@ describe('htmlhint loader', function() {
         };
         htmlHintLoader.call(prototype, inputString);
         expect(callback).to.have.been.calledWith(null, inputString);
-        expect(htmlhintStub.HTMLHint.addRule).to.have.been.calledWith(customRule);
+        expect(htmlhintStub.addRule).to.have.been.calledWith(customRule);
       });
 
     });
