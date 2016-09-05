@@ -1,6 +1,6 @@
 {
   "name": "htmlhint-loader",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A webpack loader for htmlhint",
   "main": "index.js",
   "scripts": {
