@@ -29,9 +29,9 @@
   },
   "homepage": "https://github.com/mattlewis92/htmlhint-loader#readme",
   "dependencies": {
-    "chalk": "~1.1.0",
-    "htmlhint": "~0.9.7",
-    "loader-utils": "~0.2.10"
+    "chalk": "^1.1.0",
+    "htmlhint": "^0.9.7",
+    "loader-utils": "^0.2.10"
   },
   "devDependencies": {
     "chai": "~3.5.0",
