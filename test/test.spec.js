@@ -9,7 +9,6 @@ const webpack = require('webpack');
 const stripAnsi = require('strip-ansi');
 
 chai.use(sinonChai);
-const assert = chai.assert;
 const expect = chai.expect;
 
 const webpackBase = {
