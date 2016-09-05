@@ -1,10 +1,10 @@
 'use strict';
 
-let HTMLHint = require('htmlhint').HTMLHint;
-let loaderUtils = require('loader-utils');
-let path = require('path');
-let fs = require('fs');
-let chalk = require('chalk');
+const HTMLHint = require('htmlhint').HTMLHint;
+const loaderUtils = require('loader-utils');
+const path = require('path');
+const fs = require('fs');
+const chalk = require('chalk');
 
 function formatMessage(message) {
 

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npm run lint && mocha",
     "coverage": "istanbul cover -x **test** _mocha -- -R spec && cat ./coverage/lcov.info | coveralls",
-    "lint": "eslint index.js test.js"
+    "lint": "eslint index.js test/test.spec.js",
+    "start": "mocha --watch"
   },
   "repository": {
     "type": "git",
@@ -38,10 +39,16 @@
     "eslint-config-mwl": "~0.5.0",
     "istanbul": "~0.4.5",
     "mocha": "~3.0.2",
+    "raw-loader": "~0.5.1",
     "rewire": "~2.5.2",
-    "sinon-chai": "~2.8.0"
+    "sinon-chai": "~2.8.0",
+    "strip-ansi": "~3.0.1",
+    "webpack": "~1.13.2"
   },
   "engines": {
     "node": ">=4.0.0"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }
