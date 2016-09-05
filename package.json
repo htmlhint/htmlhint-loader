@@ -33,13 +33,13 @@
     "object-assign": "~3.0.0"
   },
   "devDependencies": {
-    "chai": "~3.0.0",
+    "chai": "~3.5.0",
     "coveralls": "~2.11.2",
-    "eslint": "~0.24.1",
-    "eslint-config-mwl": "~0.1.0",
-    "istanbul": "~0.3.17",
-    "mocha": "~2.2.5",
-    "rewire": "~2.3.4",
+    "eslint": "~3.4.0",
+    "eslint-config-mwl": "~0.5.0",
+    "istanbul": "~0.4.5",
+    "mocha": "~3.0.2",
+    "rewire": "~2.5.2",
     "sinon-chai": "~2.8.0"
   }
 }

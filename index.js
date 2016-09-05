@@ -12,8 +12,8 @@ function formatMessage(message) {
   var evidence = message.evidence;
   var line = message.line;
   var col = message.col;
-  var detail = typeof message.line !== 'undefined' ?
-  chalk.yellow('L' + line) + chalk.red(':') + chalk.yellow('C' + col) : chalk.yellow('GENERAL');
+  var detail = typeof message.line !== 'undefined'
+    ? chalk.yellow('L' + line) + chalk.red(':') + chalk.yellow('C' + col) : chalk.yellow('GENERAL');
 
   if (col === 0) {
     evidence = chalk.red('?') + evidence;
@@ -121,16 +121,17 @@ module.exports = function(source) {
       fs.readFile(configFilePath, function(err, configString) {
 
         if (err) {
-          return done(err);
-        }
+          done(err);
+        } else {
 
-        try {
-          var htmlHintConfig = JSON.parse(configString);
-        } catch (e) {
-          return done(new Error('Could not parse the htmlhint config file'));
-        }
+          try {
+            var htmlHintConfig = JSON.parse(configString);
+            lint(source, assign(options, htmlHintConfig), webpack, done);
+          } catch (e) {
+            done(new Error('Could not parse the htmlhint config file'));
+          }
 
-        lint(source, assign(options, htmlHintConfig), webpack, done);
+        }
 
       });
 

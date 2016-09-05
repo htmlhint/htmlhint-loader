@@ -4,6 +4,10 @@
     "no-unused-expressions": 0
   },
   "env": {
+    "es6": true,
     "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
   }
 }
