@@ -29,7 +29,7 @@ const webpackBase = {
   }
 };
 
-const expectedErrorMessage = '[L1:C1] Tagname [ BR ] must be lower case. (tagname-lowercase)\n<BR>';
+const expectedErrorMessage = '[L1:C1] The html element name of [ BR ] must be in lowercase. (tagname-lowercase)\n<BR>';
 
 describe('htmlhint loader', () => {
 
