@@ -7,7 +7,8 @@
     "test": "npm run lint && mocha",
     "coverage": "istanbul cover -x **test** _mocha -- -R spec && cat ./coverage/lcov.info | coveralls",
     "lint": "eslint index.js test/test.spec.js",
-    "start": "mocha --watch"
+    "start": "mocha --watch",
+    "preversion": "npm test"
   },
   "repository": {
     "type": "git",
