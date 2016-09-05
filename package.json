@@ -29,8 +29,7 @@
   "dependencies": {
     "chalk": "~1.1.0",
     "htmlhint": "~0.9.7",
-    "loader-utils": "~0.2.10",
-    "object-assign": "~3.0.0"
+    "loader-utils": "~0.2.10"
   },
   "devDependencies": {
     "chai": "~3.5.0",
@@ -41,5 +40,8 @@
     "mocha": "~3.0.2",
     "rewire": "~2.5.2",
     "sinon-chai": "~2.8.0"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   }
 }

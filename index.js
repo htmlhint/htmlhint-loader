@@ -1,30 +1,29 @@
 'use strict';
 
-var HTMLHint = require('htmlhint').HTMLHint;
-var loaderUtils = require('loader-utils');
-var assign = require('object-assign');
-var path = require('path');
-var fs = require('fs');
-var chalk = require('chalk');
+let HTMLHint = require('htmlhint').HTMLHint;
+let loaderUtils = require('loader-utils');
+let path = require('path');
+let fs = require('fs');
+let chalk = require('chalk');
 
 function formatMessage(message) {
 
-  var evidence = message.evidence;
-  var line = message.line;
-  var col = message.col;
-  var detail = typeof message.line !== 'undefined'
-    ? chalk.yellow('L' + line) + chalk.red(':') + chalk.yellow('C' + col) : chalk.yellow('GENERAL');
+  let evidence = message.evidence;
+  const line = message.line;
+  const col = message.col;
+  const detail = typeof message.line !== 'undefined'
+    ? `${chalk.yellow('L' + line)}${chalk.red(':')}${chalk.yellow('C' + col)}` : chalk.yellow('GENERAL');
 
   if (col === 0) {
     evidence = chalk.red('?') + evidence;
   } else if (col > evidence.length) {
     evidence = chalk.red(evidence + ' ');
   } else {
-    evidence = evidence.slice(0, col - 1) + chalk.red(evidence[col - 1]) + evidence.slice(col);
+    evidence = `${evidence.slice(0, col - 1)}${chalk.red(evidence[col - 1])}${evidence.slice(col)}`;
   }
 
   return {
-    message: chalk.red('[') + detail + chalk.red(']') + chalk.yellow(' ' + message.message) + ' (' + message.rule.id + ')',
+    message: `${chalk.red('[')}${detail}${chalk.red(']')}${chalk.yellow(' ' + message.message)} (${message.rule.id})`,
     evidence: evidence
   };
 
@@ -32,10 +31,10 @@ function formatMessage(message) {
 
 function defaultFormatter(messages) {
 
-  var output = '';
+  let output = '';
 
-  messages.forEach(function(message) {
-    var formatted = formatMessage(message);
+  messages.forEach(message => {
+    const formatted = formatMessage(message);
     output += formatted.message + '\n';
     output += formatted.evidence + '\n';
   });
@@ -48,24 +47,18 @@ function lint(source, options, webpack, done) {
   try {
 
     if (options.customRules) {
-      options.customRules.forEach(function(rule) {
-        HTMLHint.addRule(rule);
-      });
+      options.customRules.forEach(rule => HTMLHint.addRule(rule));
     }
 
-    var report = HTMLHint.verify(source, options);
+    const report = HTMLHint.verify(source, options);
     if (report.length > 0) {
 
-      var reportByType = {
-        warning: report.filter(function(message) {
-          return message.type === 'warning';
-        }),
-        error: report.filter(function(message) {
-          return message.type === 'error';
-        })
+      const reportByType = {
+        warning: report.filter(message => message.type === 'warning'),
+        error: report.filter(message => message.type === 'error')
       };
 
-      var emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
+      let emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
       if (options.emitAs === 'error') {
         emitter = webpack.emitError;
       } else if (options.emitAs === 'warning') {
@@ -94,7 +87,7 @@ function lint(source, options, webpack, done) {
 
 module.exports = function(source) {
 
-  var options = assign(
+  const options = Object.assign(
     {  // loader defaults
       formatter: defaultFormatter,
       emitAs: null, //can be either warning or error
@@ -109,24 +102,23 @@ module.exports = function(source) {
 
   this.cacheable();
 
-  var done = this.async();
-  var webpack = this;
+  const done = this.async();
 
-  var configFilePath = path.join(process.cwd(), options.configFile);
+  const configFilePath = path.join(process.cwd(), options.configFile);
 
-  fs.exists(configFilePath, function(exists) {
+  fs.exists(configFilePath, exists => {
 
     if (exists) {
 
-      fs.readFile(configFilePath, function(err, configString) {
+      fs.readFile(configFilePath, (err, configString) => {
 
         if (err) {
           done(err);
         } else {
 
           try {
-            var htmlHintConfig = JSON.parse(configString);
-            lint(source, assign(options, htmlHintConfig), webpack, done);
+            const htmlHintConfig = JSON.parse(configString);
+            lint(source, Object.assign(options, htmlHintConfig), this, done);
           } catch (e) {
             done(new Error('Could not parse the htmlhint config file'));
           }
@@ -137,7 +129,7 @@ module.exports = function(source) {
 
     } else {
 
-      lint(source, options, webpack, done);
+      lint(source, options, this, done);
 
     }
 
