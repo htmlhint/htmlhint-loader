@@ -8,7 +8,8 @@
     "coverage": "istanbul cover -x **test** _mocha -- -R spec && cat ./coverage/lcov.info | coveralls",
     "lint": "eslint index.js test/test.spec.js",
     "start": "mocha --watch",
-    "preversion": "npm test"
+    "preversion": "npm test",
+    "postversion": "npm publish"
   },
   "repository": {
     "type": "git",
