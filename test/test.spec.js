@@ -50,6 +50,8 @@ describe('htmlhint loader', () => {
 
   });
 
+
+
   it('should emit an error', done => {
 
     webpack(Object.assign({}, webpackBase, {
@@ -93,6 +95,30 @@ describe('htmlhint loader', () => {
     });
 
   });
+
+  it("should produce results to a file", done => {
+
+    var outputFilename = "outputReport.txt"
+
+    webpack(Object.assign({}, webpackBase, {
+      entry: "./test/fixtures/error.js",
+      htmlhint: {
+        formatter: require("htmlint/bin/formatters/checkstyle"),
+        outputReport: {
+          filePath: outputFilename,
+        }
+      }), (err, stats) => {
+        if(err) {
+          done(err);
+        } else {
+          expect(fs.existsSync(outputFilename)).to.be.true
+          done();
+        }
+
+    });
+
+  });
+
 
   it('should use the htmlhintrc file', done => {
 
