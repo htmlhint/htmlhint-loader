@@ -97,12 +97,12 @@ describe('htmlhint loader', () => {
   it('should produce results to a file', done => {
 
     var outputFilename = 'outputReport.txt';
-    var fs = require('fs')
+    var fs = require('fs');
 
     webpack(Object.assign({}, webpackBase, {
-      entry: "./test/fixtures/error.js",
+      entry: './test/fixtures/error.js',
       htmlhint: {
-        formatter: require("htmlint/bin/formatters/checkstyle"),
+        formatter: require('htmlint/bin/formatters/checkstyle'),
         outputReport: {
           filePath: outputFilename,
         }
