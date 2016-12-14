@@ -100,8 +100,9 @@ describe('htmlhint loader', () => {
     var fs = require('fs');
 
     webpack(Object.assign({}, webpackBase, {
-      entry: './test/fixtures/error.js',
+      entry: __dirname + '/fixtures/error/error.js',
       htmlhint: {
+        'tagname-lowercase': true,
         outputReport: {
           filePath: outputFilename,
         }
@@ -110,7 +111,10 @@ describe('htmlhint loader', () => {
         if (err) {
           done(err);
         } else {
-          expect(fs.existsSync(outputFilename)).to.be.true;
+          var content = fs.readFileSync(process.cwd() + '/test/output/' + outputFilename, 'utf8');
+
+          expect(fs.existsSync(process.cwd() + '/test/output/' + outputFilename)).to.be.true;
+          expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
           done();
         }
     });
