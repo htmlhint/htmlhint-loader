@@ -1,4 +1,4 @@
-# 1.0.0
+# 1.0.0 (2016-09-05)
 * Breaking - dropped support for node < 4.0.0
 * Tests rewritten as integration rather than unit tests for better reliability
 
