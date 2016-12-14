@@ -107,16 +107,15 @@ describe('htmlhint loader', () => {
         outputReport: {
           filePath: outputFilename,
         }
-      }), (err, stats) => {
+      }
+    }), (err, stats) => {
         if(err) {
           done(err);
         } else {
           expect(fs.existsSync(outputFilename)).to.be.true
           done();
         }
-
     });
-
   });
 
 
