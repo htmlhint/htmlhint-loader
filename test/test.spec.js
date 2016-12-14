@@ -101,8 +101,7 @@ describe('htmlhint loader', () => {
 
     webpack(Object.assign({}, webpackBase, {
       entry: './test/fixtures/error.js',
-      htmlhint: {
-        formatter: require('htmlint/bin/formatters/checkstyle'),
+      htmlhint: {        
         outputReport: {
           filePath: outputFilename,
         }
