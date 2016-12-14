@@ -118,10 +118,10 @@ module.exports = {
   module: {
     // ...
   },
-  eslint: {
+  htmlhint: {
     outputReport: {
       filePath: 'checkstyle.xml',
-      formatter: require('eslint/lib/formatters/checkstyle')
+      formatter: require('htmlhint/bin/formatters/checkstyle')
     }
   }
 }
