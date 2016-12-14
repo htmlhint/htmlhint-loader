@@ -101,7 +101,7 @@ describe('htmlhint loader', () => {
 
     webpack(Object.assign({}, webpackBase, {
       entry: './test/fixtures/error.js',
-      htmlhint: {        
+      htmlhint: {
         outputReport: {
           filePath: outputFilename,
         }
