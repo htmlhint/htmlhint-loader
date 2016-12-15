@@ -94,13 +94,14 @@ describe('htmlhint loader', () => {
 
   });
 
-  it('should produce results to a file', done => {
+  it('should produce results to two file', done => {
 
-    var outputFilename = 'outputReport.txt';
+    var outputFilename = 'outputReport-[name].txt';
+    var expectedOutFilenames = ['outputReport-template.txt', 'outputReport-template-two.txt'];
     var fs = require('fs');
 
     webpack(Object.assign({}, webpackBase, {
-      entry: __dirname + '/fixtures/error/error.js',
+      entry: [__dirname + '/fixtures/error/error.js', __dirname + '/fixtures/error/error-two.js'],
       htmlhint: {
         'tagname-lowercase': true,
         outputReport: {
@@ -111,10 +112,13 @@ describe('htmlhint loader', () => {
         if (err) {
           done(err);
         } else {
-          var content = fs.readFileSync(process.cwd() + '/test/output/' + outputFilename, 'utf8');
-
-          expect(fs.existsSync(process.cwd() + '/test/output/' + outputFilename)).to.be.true;
+          expect(fs.existsSync(process.cwd() + '/test/output/' + expectedOutFilenames[0])).to.be.true;
+          expect(fs.existsSync(process.cwd() + '/test/output/' + expectedOutFilenames[1])).to.be.true;
+          var content = fs.readFileSync(process.cwd() + '/test/output/' + expectedOutFilenames[0], 'utf8');
           expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
+          content = fs.readFileSync(process.cwd() + '/test/output/' + expectedOutFilenames[1], 'utf8');
+          expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
+
           done();
         }
     });

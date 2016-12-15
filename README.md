@@ -110,6 +110,7 @@ module.exports = {
 Write the output of the errors to a file, for example a checkstyle xml file for use for reporting on Jenkins CI
 
 The `filePath` is relative to the webpack config: output.path
+The use of [name] is supported when linting multiple files.
 You can pass in a different formatter for the output file, if none is passed in the default/configured formatter will be used
 
 ```js
@@ -120,7 +121,7 @@ module.exports = {
   },
   htmlhint: {
     outputReport: {
-      filePath: 'checkstyle.xml',
+      filePath: 'checkstyle-[name].xml',
       formatter: require('htmlhint/bin/formatters/checkstyle')
     }
   }

@@ -71,15 +71,15 @@ function lint(source, options, webpack, done) {
         } else {
           reportOutput = messages;
         }
-
         var filePath = loaderUtils.interpolateName(webpack,
             options.outputReport.filePath, {
               content: report.map(function(r) {
-                return r.source
-              }).join("\n"),
+                return r.filePath;
+              }).join('\n'),
             }
-        )
-        webpack.emitFile(filePath, reportOutput)
+        );
+        webpack.emitFile(filePath, reportOutput);
+
       }
 
       let emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
