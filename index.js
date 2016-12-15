@@ -63,8 +63,7 @@ function lint(source, options, webpack, done) {
         r.filePath = webpack.resourcePath;
       });
       var messages = options.formatter(report);
-
-      if (options.outputReport) {
+      if (options.outputReport && options.outputReport.filePath) {
         var reportOutput;
         // if a different formatter is passed in as an option use that
         if (options.outputReport.formatter) {
@@ -72,7 +71,15 @@ function lint(source, options, webpack, done) {
         } else {
           reportOutput = messages;
         }
-        webpack.emitFile(options.outputReport.filePath, reportOutput);
+
+        var filePath = loaderUtils.interpolateName(webpack,
+            options.outputReport.filePath, {
+              content: report.map(function(r) {
+                return r.source
+              }).join("\n"),
+            }
+        )
+        webpack.emitFile(filePath, reportOutput)
       }
 
       let emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
