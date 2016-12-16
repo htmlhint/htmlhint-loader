@@ -7,6 +7,7 @@ const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 const webpack = require('webpack');
 const stripAnsi = require('strip-ansi');
+const fs = require('fs');
 
 chai.use(sinonChai);
 const expect = chai.expect;
@@ -96,12 +97,14 @@ describe('htmlhint loader', () => {
 
   it('should produce results to two file', done => {
 
-    var outputFilename = 'outputReport-[name].txt';
-    var expectedOutFilenames = ['outputReport-template.txt', 'outputReport-template-two.txt'];
-    var fs = require('fs');
+    const outputFilename = 'outputReport-[name].txt';
+    const expectedOutFilenames = ['outputReport-template.txt', 'outputReport-template-two.txt'];
 
     webpack(Object.assign({}, webpackBase, {
-      entry: [__dirname + '/fixtures/error/error.js', __dirname + '/fixtures/error/error-two.js'],
+      entry: [
+        `${__dirname}/fixtures/error/error.js`,
+        `${__dirname}/fixtures/error/error-two.js`
+      ],
       htmlhint: {
         'tagname-lowercase': true,
         outputReport: {
@@ -109,18 +112,15 @@ describe('htmlhint loader', () => {
         }
       }
     }), (err) => {
-        if (err) {
-          done(err);
-        } else {
-          expect(fs.existsSync(process.cwd() + '/test/output/' + expectedOutFilenames[0])).to.be.true;
-          expect(fs.existsSync(process.cwd() + '/test/output/' + expectedOutFilenames[1])).to.be.true;
-          var content = fs.readFileSync(process.cwd() + '/test/output/' + expectedOutFilenames[0], 'utf8');
-          expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
-          content = fs.readFileSync(process.cwd() + '/test/output/' + expectedOutFilenames[1], 'utf8');
-          expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
-
-          done();
-        }
+      if (err) {
+        done(err);
+      } else {
+        const file1Content = fs.readFileSync(`${__dirname}/output/${expectedOutFilenames[0]}`, 'utf8');
+        expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(file1Content));
+        const file2Content = fs.readFileSync(`${__dirname}/output/${expectedOutFilenames[1]}`, 'utf8');
+        expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(file2Content));
+        done();
+      }
     });
   });
 

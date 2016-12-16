@@ -59,25 +59,22 @@ function lint(source, options, webpack, done) {
       };
 
       // add filename for each results so formatter can have relevant filename
-      report.forEach(function(r) {
+      report.forEach(r => {
         r.filePath = webpack.resourcePath;
       });
-      var messages = options.formatter(report);
+
+      const messages = options.formatter(report);
       if (options.outputReport && options.outputReport.filePath) {
-        var reportOutput;
+        let reportOutput;
         // if a different formatter is passed in as an option use that
         if (options.outputReport.formatter) {
           reportOutput = options.outputReport.formatter(report);
         } else {
           reportOutput = messages;
         }
-        var filePath = loaderUtils.interpolateName(webpack,
-            options.outputReport.filePath, {
-              content: report.map(function(r) {
-                return r.filePath;
-              }).join('\n'),
-            }
-        );
+        const filePath = loaderUtils.interpolateName(webpack, options.outputReport.filePath, {
+          content: report.map(r => r.filePath).join('\n'),
+        });
         webpack.emitFile(filePath, reportOutput);
 
       }
