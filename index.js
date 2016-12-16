@@ -58,6 +58,30 @@ function lint(source, options, webpack, done) {
         error: report.filter(message => message.type === 'error')
       };
 
+      // add filename for each results so formatter can have relevant filename
+      report.forEach(function(r) {
+        r.filePath = webpack.resourcePath;
+      });
+      var messages = options.formatter(report);
+      if (options.outputReport && options.outputReport.filePath) {
+        var reportOutput;
+        // if a different formatter is passed in as an option use that
+        if (options.outputReport.formatter) {
+          reportOutput = options.outputReport.formatter(report);
+        } else {
+          reportOutput = messages;
+        }
+        var filePath = loaderUtils.interpolateName(webpack,
+            options.outputReport.filePath, {
+              content: report.map(function(r) {
+                return r.filePath;
+              }).join('\n'),
+            }
+        );
+        webpack.emitFile(filePath, reportOutput);
+
+      }
+
       let emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
       if (options.emitAs === 'error') {
         emitter = webpack.emitError;

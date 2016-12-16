@@ -94,6 +94,36 @@ describe('htmlhint loader', () => {
 
   });
 
+  it('should produce results to two file', done => {
+
+    var outputFilename = 'outputReport-[name].txt';
+    var expectedOutFilenames = ['outputReport-template.txt', 'outputReport-template-two.txt'];
+    var fs = require('fs');
+
+    webpack(Object.assign({}, webpackBase, {
+      entry: [__dirname + '/fixtures/error/error.js', __dirname + '/fixtures/error/error-two.js'],
+      htmlhint: {
+        'tagname-lowercase': true,
+        outputReport: {
+          filePath: outputFilename,
+        }
+      }
+    }), (err) => {
+        if (err) {
+          done(err);
+        } else {
+          expect(fs.existsSync(process.cwd() + '/test/output/' + expectedOutFilenames[0])).to.be.true;
+          expect(fs.existsSync(process.cwd() + '/test/output/' + expectedOutFilenames[1])).to.be.true;
+          var content = fs.readFileSync(process.cwd() + '/test/output/' + expectedOutFilenames[0], 'utf8');
+          expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
+          content = fs.readFileSync(process.cwd() + '/test/output/' + expectedOutFilenames[1], 'utf8');
+          expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(content));
+
+          done();
+        }
+    });
+  });
+
   it('should use the htmlhintrc file', done => {
 
     webpack(Object.assign({}, webpackBase, {

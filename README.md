@@ -21,8 +21,8 @@ module.exports = {
   module: {
     preLoaders: [
       {
-        test: /\.html/, 
-        loader: 'htmlhint', 
+        test: /\.html/,
+        loader: 'htmlhint',
         exclude: /node_modules/
       }
     ]
@@ -102,6 +102,28 @@ module.exports = {
         //see htmlhint docs / source for what to put here
       }
     }]
+  }
+}
+```
+
+##### `outputReport` (default: `false`)
+Write the output of the errors to a file, for example a checkstyle xml file for use for reporting on Jenkins CI
+
+The `filePath` is relative to the webpack config: output.path
+The use of [name] is supported when linting multiple files.
+You can pass in a different formatter for the output file, if none is passed in the default/configured formatter will be used
+
+```js
+module.exports = {
+  entry: "...",
+  module: {
+    // ...
+  },
+  htmlhint: {
+    outputReport: {
+      filePath: 'checkstyle-[name].xml',
+      formatter: require('htmlhint/bin/formatters/checkstyle')
+    }
   }
 }
 ```
