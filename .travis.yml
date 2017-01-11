@@ -12,3 +12,5 @@ notifications:
 
 after_success:
 - npm run codecov
+
+cache: yarn
