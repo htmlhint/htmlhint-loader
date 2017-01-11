@@ -131,14 +131,14 @@ module.exports = function(source) {
 
     if (exists) {
 
-      fs.readFile(configFilePath, (err, configString) => {
+      fs.readFile(configFilePath, 'utf8', (err, configString) => {
 
         if (err) {
           done(err);
         } else {
 
           try {
-            const htmlHintConfig = JSON.parse(configString);
+            const htmlHintConfig = JSON.parse(configString.replace(/^\uFEFF/, ''));
             lint(source, Object.assign(options, htmlHintConfig), this, done);
           } catch (e) {
             done(new Error('Could not parse the htmlhint config file'));

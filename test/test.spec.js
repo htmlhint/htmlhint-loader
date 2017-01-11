@@ -184,4 +184,24 @@ describe('htmlhint loader', () => {
 
   });
 
+  it('should handle utf-8 BOM encoded configs', done => {
+
+    webpack(Object.assign({}, webpackBase, {
+      entry: __dirname + '/fixtures/error/error.js',
+      htmlhint: {
+        configFile: 'test/htmlhint.json'
+      }
+    }), (err, stats) => {
+
+      if (err) {
+        done(err);
+      } else {
+        expect(stats.hasErrors()).to.be.false;
+        done();
+      }
+
+    });
+
+  });
+
 });
