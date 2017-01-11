@@ -35,18 +35,17 @@
     "loader-utils": "^0.2.10"
   },
   "devDependencies": {
-    "chai": "~3.5.0",
-    "coveralls": "~2.11.2",
-    "eslint": "~3.4.0",
-    "eslint-config-mwl": "~0.5.0",
-    "istanbul": "~0.4.5",
-    "mocha": "~3.0.2",
-    "raw-loader": "~0.5.1",
-    "rewire": "~2.5.2",
-    "sinon": "~1.17.5",
-    "sinon-chai": "~2.8.0",
-    "strip-ansi": "~3.0.1",
-    "webpack": "~1.13.2"
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.2",
+    "eslint": "^3.4.0",
+    "eslint-config-mwl": "^0.5.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
+    "raw-loader": "^0.5.1",
+    "sinon": "^1.17.5",
+    "sinon-chai": "^2.8.0",
+    "strip-ansi": "^3.0.1",
+    "webpack": "^1.13.2"
   },
   "engines": {
     "node": ">=4.0.0"
