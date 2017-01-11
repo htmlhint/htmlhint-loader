@@ -1,18 +1,15 @@
-'use strict';
-
-const HTMLHint = require('htmlhint').HTMLHint;
-const loaderUtils = require('loader-utils');
 const path = require('path');
 const fs = require('fs');
+const HTMLHint = require('htmlhint').HTMLHint;
+const loaderUtils = require('loader-utils');
 const chalk = require('chalk');
 
 function formatMessage(message) {
-
   let evidence = message.evidence;
   const line = message.line;
   const col = message.col;
-  const detail = typeof message.line !== 'undefined'
-    ? `${chalk.yellow('L' + line)}${chalk.red(':')}${chalk.yellow('C' + col)}` : chalk.yellow('GENERAL');
+  const detail = typeof message.line === 'undefined' ?
+    chalk.yellow('GENERAL') : `${chalk.yellow('L' + line)}${chalk.red(':')}${chalk.yellow('C' + col)}`;
 
   if (col === 0) {
     evidence = chalk.red('?') + evidence;
@@ -26,11 +23,9 @@ function formatMessage(message) {
     message: `${chalk.red('[')}${detail}${chalk.red(']')}${chalk.yellow(' ' + message.message)} (${message.rule.id})`,
     evidence: evidence
   };
-
 }
 
 function defaultFormatter(messages) {
-
   let output = '';
 
   messages.forEach(message => {
@@ -43,16 +38,13 @@ function defaultFormatter(messages) {
 }
 
 function lint(source, options, webpack, done) {
-
   try {
-
     if (options.customRules) {
       options.customRules.forEach(rule => HTMLHint.addRule(rule));
     }
 
     const report = HTMLHint.verify(source, options);
     if (report.length > 0) {
-
       const reportByType = {
         warning: report.filter(message => message.type === 'warning'),
         error: report.filter(message => message.type === 'error')
@@ -73,10 +65,9 @@ function lint(source, options, webpack, done) {
           reportOutput = messages;
         }
         const filePath = loaderUtils.interpolateName(webpack, options.outputReport.filePath, {
-          content: report.map(r => r.filePath).join('\n'),
+          content: report.map(r => r.filePath).join('\n')
         });
         webpack.emitFile(filePath, reportOutput);
-
       }
 
       let emitter = reportByType.error.length > 0 ? webpack.emitError : webpack.emitWarning;
@@ -95,23 +86,19 @@ function lint(source, options, webpack, done) {
       if (reportByType.warning.length > 0 && options.failOnWarning) {
         throw new Error('Module failed because of a htmlhint warning.');
       }
-
     }
 
     done(null, source);
-
-  } catch (e) {
-    done(e);
+  } catch (err) {
+    done(err);
   }
-
 }
 
-module.exports = function(source) {
-
+module.exports = function (source) {
   const options = Object.assign(
     {  // loader defaults
       formatter: defaultFormatter,
-      emitAs: null, //can be either warning or error
+      emitAs: null, // can be either warning or error
       failOnError: false,
       failOnWarning: false,
       customRules: [],
@@ -128,32 +115,21 @@ module.exports = function(source) {
   const configFilePath = path.join(process.cwd(), options.configFile);
 
   fs.exists(configFilePath, exists => {
-
     if (exists) {
-
       fs.readFile(configFilePath, 'utf8', (err, configString) => {
-
         if (err) {
           done(err);
         } else {
-
           try {
             const htmlHintConfig = JSON.parse(configString.replace(/^\uFEFF/, ''));
             lint(source, Object.assign(options, htmlHintConfig), this, done);
-          } catch (e) {
+          } catch (err) {
             done(new Error('Could not parse the htmlhint config file'));
           }
-
         }
-
       });
-
     } else {
-
       lint(source, options, this, done);
-
     }
-
   });
-
 };

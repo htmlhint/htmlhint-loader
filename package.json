@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run lint && mocha",
     "coverage": "istanbul cover -x **test** _mocha -- -R spec && cat ./coverage/lcov.info | codecov",
-    "lint": "eslint index.js test/test.spec.js",
+    "lint": "xo index.js test/test.spec.js",
     "start": "mocha --watch",
     "preversion": "npm test",
     "postversion": "npm publish"
@@ -37,20 +37,26 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
-    "eslint": "^3.4.0",
-    "eslint-config-mwl": "^0.5.0",
     "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
     "raw-loader": "^0.5.1",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
     "strip-ansi": "^3.0.1",
-    "webpack": "^1.13.2"
+    "webpack": "^1.13.2",
+    "xo": "~0.17.1"
   },
   "engines": {
     "node": ">=4.0.0"
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "xo": {
+    "space": true,
+    "envs": [
+      "node",
+      "mocha"
+    ]
+  }
 }
