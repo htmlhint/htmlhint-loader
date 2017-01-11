@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && mocha",
-    "coverage": "istanbul cover -x **test** _mocha -- -R spec && cat ./coverage/lcov.info | coveralls",
+    "coverage": "istanbul cover -x **test** _mocha -- -R spec && cat ./coverage/lcov.info | codecov",
     "lint": "eslint index.js test/test.spec.js",
     "start": "mocha --watch",
     "preversion": "npm test",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "coveralls": "^2.11.2",
+    "codecov": "^1.0.1",
     "eslint": "^3.4.0",
     "eslint-config-mwl": "^0.5.0",
     "istanbul": "^0.4.5",
