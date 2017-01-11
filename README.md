@@ -6,7 +6,7 @@
 [![Build Status](https://travis-ci.org/mattlewis92/htmlhint-loader.svg)](https://travis-ci.org/mattlewis92/htmlhint-loader)
 [![codecov](https://codecov.io/gh/mattlewis92/htmlhint-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/htmlhint-loader)
 [![Dependency Status](https://david-dm.org/mattlewis92/htmlhint-loader.svg)](https://david-dm.org/mattlewis92/htmlhint-loader)
-[![devDependency Status](https://david-dm.org/mattlewis92/htmlhint-loader/dev-status.svg)](https://david-dm.org/mattlewis92/htmlhint-loader#info=devDependencies)
+[![devDependency Status](https://david-dm.org/mattlewis92/htmlhint-loader/dev-status.svg)](https://david-dm.org/mattlewis92/htmlhint-loader?type=dev)
 
 ## Install
 
