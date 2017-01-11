@@ -1,5 +1,4 @@
 .idea
 node_modules
 coverage
-.coveralls.yml
 test/output
