@@ -1,3 +1,6 @@
+# 1.1.1 (2016-01-11)
+* Handle BOM encoding in config files
+
 # 1.1.0 (2016-12-16)
 * Add the `outputReport` report option - thanks to @colinwkirk
 
