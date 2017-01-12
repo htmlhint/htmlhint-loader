@@ -5,6 +5,7 @@ const fs = require('fs');
 const HTMLHint = require('htmlhint').HTMLHint;
 const loaderUtils = require('loader-utils');
 const chalk = require('chalk');
+const stripBom = require('strip-bom');
 
 function formatMessage(message) {
   let evidence = message.evidence;
@@ -123,7 +124,7 @@ module.exports = function (source) {
           done(err);
         } else {
           try {
-            const htmlHintConfig = JSON.parse(configString.replace(/^\uFEFF/, ''));
+            const htmlHintConfig = JSON.parse(stripBom(configString));
             lint(source, Object.assign(options, htmlHintConfig), this, done);
           } catch (err) {
             done(new Error('Could not parse the htmlhint config file'));
