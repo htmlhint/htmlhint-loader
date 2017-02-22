@@ -1,5 +1,6 @@
 # 1.1.2 (2017-02-22)
 * Upgrade loader-utils to remove deprecation warning
+* Update readme to reflect webpack 2 config style
 
 # 1.1.1 (2017-01-11)
 * Handle BOM encoding in config files
