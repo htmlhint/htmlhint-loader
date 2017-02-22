@@ -19,13 +19,12 @@ npm install htmlhint-loader
 ```javascript
 module.exports = {
   module: {
-    preLoaders: [
-      {
-        test: /\.html/,
-        loader: 'htmlhint',
-        exclude: /node_modules/
-      }
-    ]
+    rules: [{
+      enforce: 'pre',
+      test: /\.html/,
+      loader: 'htmlhint',
+      exclude: /node_modules/
+    }]
   }
 }
 ```
@@ -37,25 +36,32 @@ You can directly pass some [htmlhint rules](https://github.com/yaniswang/HTMLHin
 - Adding a query string to the loader for this loader usage only
 
 ```javascript
-{
+module.exports = {
   module: {
-    preLoaders: [
-      {
-        test: /\.html/,
-        loader: 'htmlhint?{tagname-lowercase: true}',
-        exclude: /node_modules/
-      },
-    ]
+    rules: [{
+      enforce: 'pre',
+      test: /\.html/,
+      loader: 'htmlhint?{tagname-lowercase: true}',
+      exclude: /node_modules/
+    }]
   }
 }
 ```
 
-- Adding a `htmlhint` entry in your webpack config for global options:
+- Adding a `htmlhint` entry in your webpack loader options:
 
 ```javascript
 module.exports = {
-  htmlhint: {
-    configFile: 'path/.htmlhintrc'
+  module: {
+    rules: [{
+      enforce: 'pre',
+      test: /\.html/,
+      loader: 'htmlhint',
+      exclude: /node_modules/,
+      options: {
+        configFile: 'path/.htmlhintrc'
+      }
+    }]
   }
 }
 ```
@@ -94,12 +100,20 @@ Whether to force webpack to fail the build on a htmlhint warning
 Any custom rules you would like added to htmlhint. Specify as an array like so:
 ```javascript
 module.exports = {
-  htmlhint: {
-    customRules: [{
-      id: 'my-rule-name',
-      description: 'Example description',
-      init: function(parser, reporter) {
-        //see htmlhint docs / source for what to put here
+  module: {
+    rules: [{
+      enforce: 'pre',
+      test: /\.html/,
+      loader: 'htmlhint',
+      exclude: /node_modules/,
+      options: {
+        customRules: [{
+          id: 'my-rule-name',
+          description: 'Example description',
+          init: function(parser, reporter) {
+            //see htmlhint docs / source for what to put here
+          }
+        }]
       }
     }]
   }
@@ -113,17 +127,21 @@ The `filePath` is relative to the webpack config: output.path
 The use of [name] is supported when linting multiple files.
 You can pass in a different formatter for the output file, if none is passed in the default/configured formatter will be used
 
-```js
+```javascript
 module.exports = {
-  entry: "...",
   module: {
-    // ...
-  },
-  htmlhint: {
-    outputReport: {
-      filePath: 'checkstyle-[name].xml',
-      formatter: require('htmlhint/bin/formatters/checkstyle')
-    }
+    rules: [{
+      enforce: 'pre',
+      test: /\.html/,
+      loader: 'htmlhint',
+      exclude: /node_modules/,
+      options: {
+        outputReport: {
+          filePath: 'checkstyle-[name].xml',
+          formatter: require('htmlhint/bin/formatters/checkstyle')
+        }
+      }
+    }]
   }
 }
 ```
