@@ -108,7 +108,7 @@ module.exports = function (source) {
       configFile: '.htmlhintrc'
     },
     this.options.htmlhint || {}, // user defaults
-    loaderUtils.parseQuery(this.query) // loader query string
+    loaderUtils.getOptions(this) // loader query string
   );
 
   this.cacheable();
