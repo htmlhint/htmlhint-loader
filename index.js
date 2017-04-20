@@ -42,30 +42,30 @@ function defaultFormatter(messages) {
 
 // load custom rles
 function loadCustomRules(rulesdir) {
-    rulesdir = rulesdir.replace(/\\/g, '/');
-    if (fs.existsSync(rulesdir)) {
-        if (fs.statSync(rulesdir).isDirectory()) {
-            const files = fs.readdirSync(rulesdir)
-            files.forEach(file => {
-              loadRule(path.join(rulesdir, file));
-            });
-        }
-        else{
-            loadRule(rulesdir);
-        }
+  rulesdir = rulesdir.replace(/\\/g, '/');
+  if (fs.existsSync(rulesdir)) {
+    if (fs.statSync(rulesdir).isDirectory()) {
+      const files = fs.readdirSync(rulesdir);
+      files.forEach(file => {
+        loadRule(path.join(rulesdir, file));
+      });
+    } else {
+      loadRule(rulesdir);
     }
+  }
 }
 
 // load rule
-function loadRule(filepath){
-    filepath = path.resolve(filepath);
-    try {
-        var module = require(filepath);
-        module(HTMLHint);
-    }
-    catch (e) {
-      throw new Error(e.message);
-    }
+function loadRule(filepath) {
+  /* eslint-disable import/no-dynamic-require */  // --> OFF
+  filepath = path.resolve(filepath);
+  try {
+    var module = require(filepath);
+    module(HTMLHint);
+  } catch (err) {
+    throw new Error(err.message);
+  }
+  /* eslint-enable import/no-dynamic-require */  // --> ON
 }
 
 function lint(source, options, webpack, done) {
