@@ -111,7 +111,7 @@ function lint(source, options, webpack, done) {
         emitter = webpack.emitWarning;
       }
 
-      emitter(options.formatter(report));
+      emitter(new Error(options.formatter(report)));
 
       if (reportByType.error.length > 0 && options.failOnError) {
         throw new Error('Module failed because of a htmlhint error.');
