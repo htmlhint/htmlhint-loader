@@ -40,10 +40,41 @@ function defaultFormatter(messages) {
   return output.trim();
 }
 
+// load custom rles
+function loadCustomRules(rulesdir) {
+    rulesdir = rulesdir.replace(/\\/g, '/');
+    if (fs.existsSync(rulesdir)) {
+        if (fs.statSync(rulesdir).isDirectory()) {
+            const files = fs.readdirSync(rulesdir)
+            files.forEach(file => {
+              loadRule(path.join(rulesdir, file));
+            });
+        }
+        else{
+            loadRule(rulesdir);
+        }
+    }
+}
+
+// load rule
+function loadRule(filepath){
+    filepath = path.resolve(filepath);
+    try {
+        var module = require(filepath);
+        module(HTMLHint);
+    }
+    catch (e) {
+      throw new Error(e.message);
+    }
+}
+
 function lint(source, options, webpack, done) {
   try {
     if (options.customRules) {
       options.customRules.forEach(rule => HTMLHint.addRule(rule));
+    }
+    if (options.rulesdir) {
+      loadCustomRules(options.rulesdir);
     }
 
     const report = HTMLHint.verify(source, options);
