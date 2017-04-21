@@ -24,7 +24,7 @@ function formatMessage(message) {
 
   return {
     message: `${chalk.red('[')}${detail}${chalk.red(']')}${chalk.yellow(' ' + message.message)} (${message.rule.id})`,
-    evidence: evidence
+    evidence: evidence // eslint-disable-line object-shorthand
   };
 }
 
@@ -53,7 +53,7 @@ function lint(source, options, webpack, done) {
         error: report.filter(message => message.type === 'error')
       };
 
-      // add filename for each results so formatter can have relevant filename
+      // Add filename for each results so formatter can have relevant filename
       report.forEach(r => {
         r.filePath = webpack.resourcePath;
       });
@@ -61,7 +61,7 @@ function lint(source, options, webpack, done) {
       const messages = options.formatter(report);
       if (options.outputReport && options.outputReport.filePath) {
         let reportOutput;
-        // if a different formatter is passed in as an option use that
+        // If a different formatter is passed in as an option use that
         if (options.outputReport.formatter) {
           reportOutput = options.outputReport.formatter(report);
         } else {
@@ -99,16 +99,16 @@ function lint(source, options, webpack, done) {
 
 module.exports = function (source) {
   const options = Object.assign(
-    {  // loader defaults
+    {  // Loader defaults
       formatter: defaultFormatter,
-      emitAs: null, // can be either warning or error
+      emitAs: null, // Can be either warning or error
       failOnError: false,
       failOnWarning: false,
       customRules: [],
       configFile: '.htmlhintrc'
     },
-    this.options.htmlhint || {}, // user defaults
-    loaderUtils.getOptions(this) // loader query string
+    this.options.htmlhint || {}, // User defaults
+    loaderUtils.getOptions(this) // Loader query string
   );
 
   this.cacheable();
