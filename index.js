@@ -6,6 +6,7 @@ const HTMLHint = require('htmlhint').HTMLHint;
 const loaderUtils = require('loader-utils');
 const chalk = require('chalk');
 const stripBom = require('strip-bom');
+const glob = require('glob');
 
 function formatMessage(message) {
   let evidence = message.evidence;
@@ -40,32 +41,36 @@ function defaultFormatter(messages) {
   return output.trim();
 }
 
-// load custom rles
-function loadCustomRules(rulesdir) {
-  rulesdir = rulesdir.replace(/\\/g, '/');
-  if (fs.existsSync(rulesdir)) {
-    if (fs.statSync(rulesdir).isDirectory()) {
-      const files = fs.readdirSync(rulesdir);
-      files.forEach(file => {
-        loadRule(path.join(rulesdir, file));
+// load custom rules
+function loadCustomRules(options) {
+  let rulesDir = options.rulesDir.replace(/\\/g, '/');
+  if (fs.existsSync(rulesDir)) {
+    if (fs.statSync(rulesDir).isDirectory()) {
+      rulesDir += /\/$/.test(rulesDir) ? '' : '/';
+      rulesDir += '**/*.js';
+      glob.sync(rulesDir, {
+        dot: false,
+        nodir: true,
+        strict: false,
+        silent: true
+      }).forEach(file => {
+        loadRule(file, options);
       });
     } else {
-      loadRule(rulesdir);
+      loadRule(rulesDir, options);
     }
   }
 }
 
-// load rule
-function loadRule(filepath) {
-  /* eslint-disable import/no-dynamic-require */  // --> OFF
+function loadRule(filepath, options = {}) {
   filepath = path.resolve(filepath);
   try {
-    var module = require(filepath);
-    module(HTMLHint);
+    const ruleObj = require(filepath); // eslint-disable-line import/no-dynamic-require
+    const ruleOption = options[ruleObj.id]; // we can pass a value to the rule
+    ruleObj.rule(HTMLHint, ruleOption);
   } catch (err) {
     throw new Error(err.message);
   }
-  /* eslint-enable import/no-dynamic-require */  // --> ON
 }
 
 function lint(source, options, webpack, done) {
@@ -73,8 +78,8 @@ function lint(source, options, webpack, done) {
     if (options.customRules) {
       options.customRules.forEach(rule => HTMLHint.addRule(rule));
     }
-    if (options.rulesdir) {
-      loadCustomRules(options.rulesdir);
+    if (options.rulesDir) {
+      loadCustomRules(options);
     }
 
     const report = HTMLHint.verify(source, options);

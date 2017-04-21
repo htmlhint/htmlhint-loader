@@ -120,6 +120,46 @@ module.exports = {
 }
 ```
 
+#### `rulesDir`
+
+You can add a path to a folder containing your custom rules.
+See bellow for the format of the rule, it is not the same as the HTMLHINT ; you can pass a value to a rule.
+```javascript
+// webpack config
+module.exports = {
+  module: {
+    rules: [{
+      enforce: 'pre',
+      test: /\.html/,
+      loader: 'htmlhint',
+      exclude: /node_modules/,
+      options: {
+        rulesDir: path.join(__dirname, 'rules/'),
+        'my-new-rule': 'this is pass to the rule (option)'
+      }
+    }]
+  }
+}
+```
+
+```javascript
+// rules/myNewRule.js
+const id = 'my-new-rule';
+
+module.exports = {
+  id,
+  rule: function(HTMLHint, option /* = 'this is pass to the rule (option)' */) {
+    HTMLHint.addRule({
+      id,
+      description: 'my-new-rule',
+      init: () => {
+        //see htmlhint docs / source for what to put here
+      }
+    });
+  }
+};
+```
+
 ##### `outputReport` (default: `false`)
 Write the output of the errors to a file, for example a checkstyle xml file for use for reporting on Jenkins CI
 
