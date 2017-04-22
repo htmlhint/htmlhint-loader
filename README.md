@@ -123,7 +123,7 @@ module.exports = {
 #### `rulesDir`
 
 You can add a path to a folder containing your custom rules.
-See bellow for the format of the rule, it is not the same as the HTMLHINT ; you can pass a value to a rule.
+See below for the format of the rule, it is not the same as HTMLHINT - you can pass a value to a rule.
 ```javascript
 // webpack config
 module.exports = {
