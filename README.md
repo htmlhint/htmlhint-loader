@@ -131,7 +131,7 @@ module.exports = {
     rules: [{
       enforce: 'pre',
       test: /\.html/,
-      loader: 'htmlhint',
+      loader: 'htmlhint-loader',
       exclude: /node_modules/,
       options: {
         rulesDir: path.join(__dirname, 'rules/'),
