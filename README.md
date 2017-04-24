@@ -22,7 +22,7 @@ module.exports = {
     rules: [{
       enforce: 'pre',
       test: /\.html/,
-      loader: 'htmlhint',
+      loader: 'htmlhint-loader',
       exclude: /node_modules/
     }]
   }
@@ -41,7 +41,7 @@ module.exports = {
     rules: [{
       enforce: 'pre',
       test: /\.html/,
-      loader: 'htmlhint?{tagname-lowercase: true}',
+      loader: 'htmlhint-loader?{tagname-lowercase: true}',
       exclude: /node_modules/
     }]
   }
@@ -56,7 +56,7 @@ module.exports = {
     rules: [{
       enforce: 'pre',
       test: /\.html/,
-      loader: 'htmlhint',
+      loader: 'htmlhint-loader',
       exclude: /node_modules/,
       options: {
         configFile: 'path/.htmlhintrc'
@@ -104,7 +104,7 @@ module.exports = {
     rules: [{
       enforce: 'pre',
       test: /\.html/,
-      loader: 'htmlhint',
+      loader: 'htmlhint-loader',
       exclude: /node_modules/,
       options: {
         customRules: [{
@@ -133,7 +133,7 @@ module.exports = {
     rules: [{
       enforce: 'pre',
       test: /\.html/,
-      loader: 'htmlhint',
+      loader: 'htmlhint-loader',
       exclude: /node_modules/,
       options: {
         outputReport: {
