@@ -6,6 +6,7 @@
   "scripts": {
     "pretest": "npm run lint",
     "test": "nyc mocha",
+    "test:debug": "mocha --inspect --debug-brk",
     "codecov": "cat ./coverage/lcov.info | codecov",
     "lint": "xo index.js test/test.spec.js",
     "start": "mocha --watch",
@@ -32,6 +33,7 @@
   "homepage": "https://github.com/mattlewis92/htmlhint-loader#readme",
   "dependencies": {
     "chalk": "^1.1.0",
+    "glob": "^7.1.1",
     "htmlhint": "^0.9.7",
     "loader-utils": "^1.0.2",
     "strip-bom": "^3.0.0"

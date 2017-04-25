@@ -6,6 +6,7 @@ const HTMLHint = require('htmlhint').HTMLHint;
 const loaderUtils = require('loader-utils');
 const chalk = require('chalk');
 const stripBom = require('strip-bom');
+const glob = require('glob');
 
 function formatMessage(message) {
   let evidence = message.evidence;
@@ -40,10 +41,41 @@ function defaultFormatter(messages) {
   return output.trim();
 }
 
+function loadCustomRules(options) {
+  let rulesDir = options.rulesDir.replace(/\\/g, '/');
+  if (fs.existsSync(rulesDir)) {
+    if (fs.statSync(rulesDir).isDirectory()) {
+      rulesDir += /\/$/.test(rulesDir) ? '' : '/';
+      rulesDir += '**/*.js';
+      glob.sync(rulesDir, {
+        dot: false,
+        nodir: true,
+        strict: false,
+        silent: true
+      }).forEach(file => {
+        loadRule(file, options);
+      });
+    } else {
+      loadRule(rulesDir, options);
+    }
+  }
+}
+
+function loadRule(filepath, options) {
+  options = options || {};
+  filepath = path.resolve(filepath);
+  const ruleObj = require(filepath); // eslint-disable-line import/no-dynamic-require
+  const ruleOption = options[ruleObj.id]; // We can pass a value to the rule
+  ruleObj.rule(HTMLHint, ruleOption);
+}
+
 function lint(source, options, webpack, done) {
   try {
     if (options.customRules) {
       options.customRules.forEach(rule => HTMLHint.addRule(rule));
+    }
+    if (options.rulesDir) {
+      loadCustomRules(options);
     }
 
     const report = HTMLHint.verify(source, options);

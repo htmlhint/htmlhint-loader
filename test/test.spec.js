@@ -194,6 +194,27 @@ describe('htmlhint loader', () => {
     });
   });
 
+  it('should allow rulesDir', done => {
+    const ruleCalled = sinon.spy();
+
+    webpack(Object.assign({}, webpackBase, {
+      entry: path.join(__dirname, 'fixtures/error/error.js'),
+      plugins: [
+        new webpack.LoaderOptionsPlugin({
+          options: {
+            htmlhint: {
+              rulesDir: path.join(__dirname, 'fixtures/rules'),
+              'my-new-rule': ruleCalled
+            }
+          }
+        })
+      ]
+    }), () => {
+      expect(ruleCalled).to.have.been.callCount(1);
+      done();
+    });
+  });
+
   it('should handle utf-8 BOM encoded configs', done => {
     webpack(Object.assign({}, webpackBase, {
       entry: path.join(__dirname, 'fixtures/error/error.js'),
