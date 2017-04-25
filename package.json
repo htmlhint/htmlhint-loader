@@ -33,6 +33,7 @@
   "homepage": "https://github.com/mattlewis92/htmlhint-loader#readme",
   "dependencies": {
     "chalk": "^1.1.0",
+    "glob": "^7.1.1",
     "htmlhint": "^0.9.7",
     "loader-utils": "^1.0.2",
     "strip-bom": "^3.0.0"
@@ -40,7 +41,6 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "codecov-lite": "^0.1.3",
-    "glob": "^7.1.1",
     "mocha": "^3.0.2",
     "nyc": "^10.0.0",
     "raw-loader": "^0.5.1",
