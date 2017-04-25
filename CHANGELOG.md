@@ -1,3 +1,7 @@
+# 1.2.0 (2017-04-25)
+* Add the `rulesDir` option - thanks to @Benoit-Vasseur
+* Fix webpack 2 loader syntax in the readme - thanks to @jaythomas
+
 # 1.1.2 (2017-02-22)
 * Upgrade loader-utils to remove deprecation warning
 * Update readme to reflect webpack 2 config style
