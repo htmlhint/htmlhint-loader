@@ -41,7 +41,6 @@ function defaultFormatter(messages) {
   return output.trim();
 }
 
-// load custom rules
 function loadCustomRules(options) {
   let rulesDir = options.rulesDir.replace(/\\/g, '/');
   if (fs.existsSync(rulesDir)) {
@@ -64,13 +63,9 @@ function loadCustomRules(options) {
 
 function loadRule(filepath, options = {}) {
   filepath = path.resolve(filepath);
-  try {
-    const ruleObj = require(filepath); // eslint-disable-line import/no-dynamic-require
-    const ruleOption = options[ruleObj.id]; // we can pass a value to the rule
-    ruleObj.rule(HTMLHint, ruleOption);
-  } catch (err) {
-    throw new Error(err.message);
-  }
+  const ruleObj = require(filepath); // eslint-disable-line import/no-dynamic-require
+  const ruleOption = options[ruleObj.id]; // We can pass a value to the rule
+  ruleObj.rule(HTMLHint, ruleOption);
 }
 
 function lint(source, options, webpack, done) {
