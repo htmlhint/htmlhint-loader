@@ -61,7 +61,8 @@ function loadCustomRules(options) {
   }
 }
 
-function loadRule(filepath, options = {}) {
+function loadRule(filepath, options) {
+  options = options || {};
   filepath = path.resolve(filepath);
   const ruleObj = require(filepath); // eslint-disable-line import/no-dynamic-require
   const ruleOption = options[ruleObj.id]; // We can pass a value to the rule
