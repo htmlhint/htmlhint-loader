@@ -1,3 +1,7 @@
+# 1.3.0 (2017-06-02)
+* Allow absolute paths to the config file
+* Warn if the config file was not found
+
 # 1.2.0 (2017-04-25)
 * Add the `rulesDir` option - thanks to @Benoit-Vasseur
 * Fix webpack 2 loader syntax in the readme - thanks to @jaythomas
