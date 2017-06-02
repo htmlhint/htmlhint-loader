@@ -130,6 +130,7 @@ function lint(source, options, webpack, done) {
 }
 
 module.exports = function (source) {
+  const DEFAULT_CONFIG_FILE = '.htmlhintrc';
   const options = Object.assign(
     {  // Loader defaults
       formatter: defaultFormatter,
@@ -137,7 +138,7 @@ module.exports = function (source) {
       failOnError: false,
       failOnWarning: false,
       customRules: [],
-      configFile: '.htmlhintrc'
+      configFile: DEFAULT_CONFIG_FILE
     },
     this.options.htmlhint || {}, // User defaults
     loaderUtils.getOptions(this) // Loader query string
@@ -167,6 +168,9 @@ module.exports = function (source) {
         }
       });
     } else {
+      if (configFilePath !== path.join(process.cwd(), DEFAULT_CONFIG_FILE)) {
+        console.warn(`Could not find htmlhint config file in ${configFilePath}`);
+      }
       lint(source, options, this, done);
     }
   });
