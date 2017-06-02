@@ -147,7 +147,10 @@ module.exports = function (source) {
 
   const done = this.async();
 
-  const configFilePath = path.join(process.cwd(), options.configFile);
+  let configFilePath = options.configFile;
+  if (!path.isAbsolute(configFilePath)) {
+    configFilePath = path.join(process.cwd(), configFilePath);
+  }
 
   fs.exists(configFilePath, exists => {
     if (exists) {

@@ -236,4 +236,27 @@ describe('htmlhint loader', () => {
       }
     });
   });
+
+  it('should allow absolute config file paths', done => {
+    webpack(Object.assign({}, webpackBase, {
+      entry: path.join(__dirname, 'fixtures/error/error.js'),
+      plugins: [
+        new webpack.LoaderOptionsPlugin({
+          options: {
+            htmlhint: {
+              configFile: path.join(__dirname, '.htmlhintrc')
+            }
+          }
+        })
+      ]
+    }), (err, stats) => {
+      if (err) {
+        done(err);
+      } else {
+        expect(stats.hasErrors()).to.equal(true);
+        expect(stripAnsi(stats.compilation.errors[0].message)).to.equal(expectedErrorMessage);
+        done();
+      }
+    });
+  });
 });
