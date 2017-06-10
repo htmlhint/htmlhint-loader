@@ -178,7 +178,10 @@ module.exports = {
       options: {
         outputReport: {
           filePath: 'checkstyle-[name].xml',
-          formatter: require('htmlhint/bin/formatters/checkstyle')
+          formatter(messages) {
+            // convert messages to a string that will be written to the file
+            return messagesFormattedToString;
+          }
         }
       }
     }]
