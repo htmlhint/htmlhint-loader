@@ -1,3 +1,6 @@
+# 1.3.1 (2018-03-06) 
+* Fix compatibility with webpack 4
+
 # 1.3.0 (2017-06-02)
 * Allow absolute paths to the config file
 * Warn if the config file was not found
