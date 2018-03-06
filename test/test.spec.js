@@ -12,6 +12,7 @@ chai.use(sinonChai);
 const expect = chai.expect;
 
 const webpackBase = {
+  mode: 'development',
   output: {
     path: path.join(__dirname, 'output')
   },
