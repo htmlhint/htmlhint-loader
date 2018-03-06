@@ -132,7 +132,7 @@ function lint(source, options, webpack, done) {
 module.exports = function (source) {
   const DEFAULT_CONFIG_FILE = '.htmlhintrc';
   const options = Object.assign(
-    {  // Loader defaults
+    { // Loader defaults
       formatter: defaultFormatter,
       emitAs: null, // Can be either warning or error
       failOnError: false,
@@ -153,25 +153,23 @@ module.exports = function (source) {
     configFilePath = path.join(process.cwd(), configFilePath);
   }
 
-  fs.exists(configFilePath, exists => {
-    if (exists) {
-      fs.readFile(configFilePath, 'utf8', (err, configString) => {
-        if (err) {
-          done(err);
-        } else {
-          try {
-            const htmlHintConfig = JSON.parse(stripBom(configString));
-            lint(source, Object.assign(options, htmlHintConfig), this, done);
-          } catch (err) {
-            done(new Error('Could not parse the htmlhint config file'));
-          }
+  if (fs.existsSync(configFilePath)) {
+    fs.readFile(configFilePath, 'utf8', (err, configString) => {
+      if (err) {
+        done(err);
+      } else {
+        try {
+          const htmlHintConfig = JSON.parse(stripBom(configString));
+          lint(source, Object.assign(options, htmlHintConfig), this, done);
+        } catch (err) {
+          done(new Error('Could not parse the htmlhint config file'));
         }
-      });
-    } else {
-      if (configFilePath !== path.join(process.cwd(), DEFAULT_CONFIG_FILE)) {
-        console.warn(`Could not find htmlhint config file in ${configFilePath}`);
       }
-      lint(source, options, this, done);
+    });
+  } else {
+    if (configFilePath !== path.join(process.cwd(), DEFAULT_CONFIG_FILE)) {
+      console.warn(`Could not find htmlhint config file in ${configFilePath}`);
     }
-  });
+    lint(source, options, this, done);
+  }
 };
