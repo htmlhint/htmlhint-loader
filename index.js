@@ -140,7 +140,7 @@ module.exports = function (source) {
       customRules: [],
       configFile: DEFAULT_CONFIG_FILE
     },
-    this.options.htmlhint || {}, // User defaults
+    this.options && this.options.htmlhint ? this.options.htmlhint : {}, // User defaults
     loaderUtils.getOptions(this) // Loader query string
   );
 
