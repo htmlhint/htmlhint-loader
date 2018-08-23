@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/mattlewis92/htmlhint-loader.svg)](https://travis-ci.org/thedaviddias/htmlhint-loader)
 [![codecov](https://codecov.io/gh/thedaviddias/htmlhint-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/thedaviddias/htmlhint-loader)
 [![Dependency Status](https://david-dm.org/mattlewis92/htmlhint-loader.svg)](https://david-dm.org/mattlewis92/htmlhint-loader)
-[![devDependency Status](https://david-dm.org/thedaviddias/htmlhint-loader/dev-status.svg)](https://david-dm.org/thedaviddias/htmlhint-loader?type=dev)
+[![devDependency Status](https://david-dm.org/thedaviddias/htmlhint-loader/dev-status.svg)](https://david-dm.org/thedaviddias/htmlhint-loader?type=dev) [![Greenkeeper badge](https://badges.greenkeeper.io/thedaviddias/htmlhint-loader.svg)](https://greenkeeper.io/)
 
 > A webpack loader for htmlhint
 
