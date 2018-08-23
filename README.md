@@ -1,12 +1,12 @@
 # htmlhint-loader
 
-> A webpack loader for htmlhint
-
 [![npm version](https://badge.fury.io/js/htmlhint-loader.svg)](http://badge.fury.io/js/htmlhint-loader)
-[![Build Status](https://travis-ci.org/mattlewis92/htmlhint-loader.svg)](https://travis-ci.org/mattlewis92/htmlhint-loader)
-[![codecov](https://codecov.io/gh/mattlewis92/htmlhint-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/mattlewis92/htmlhint-loader)
+[![Build Status](https://travis-ci.org/mattlewis92/htmlhint-loader.svg)](https://travis-ci.org/thedaviddias/htmlhint-loader)
+[![codecov](https://codecov.io/gh/thedaviddias/htmlhint-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/thedaviddias/htmlhint-loader)
 [![Dependency Status](https://david-dm.org/mattlewis92/htmlhint-loader.svg)](https://david-dm.org/mattlewis92/htmlhint-loader)
-[![devDependency Status](https://david-dm.org/mattlewis92/htmlhint-loader/dev-status.svg)](https://david-dm.org/mattlewis92/htmlhint-loader?type=dev)
+[![devDependency Status](https://david-dm.org/thedaviddias/htmlhint-loader/dev-status.svg)](https://david-dm.org/thedaviddias/htmlhint-loader?type=dev)
+
+> A webpack loader for htmlhint
 
 ## Install
 
@@ -31,7 +31,7 @@ module.exports = {
 
 ### Options
 
-You can directly pass some [htmlhint rules](https://github.com/yaniswang/HTMLHint/wiki/Rules) by
+You can directly pass some [htmlhint rules](https://github.com/thedaviddias/HTMLHint/wiki/Rules) by
 
 - Adding a query string to the loader for this loader usage only
 
