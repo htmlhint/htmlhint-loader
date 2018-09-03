@@ -34,7 +34,7 @@
   "dependencies": {
     "chalk": "^2.3.2",
     "glob": "^7.1.2",
-    "htmlhint": "^0.9.7",
+    "htmlhint": "^0.10.0",
     "loader-utils": "^1.0.2",
     "strip-bom": "^3.0.0"
   },
