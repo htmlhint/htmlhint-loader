@@ -60,9 +60,6 @@ describe('htmlhint loader', () => {
         })
       ]
     }), (err, stats) => {
-
-      // console.log(err, stats.hasErrors());
-
       if (err) {
         done(err);
       } else {
