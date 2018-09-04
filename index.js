@@ -1,17 +1,17 @@
 'use strict';
 
-const path = require('path');
-const fs = require('fs');
-const HTMLHint = require('htmlhint').HTMLHint;
-const loaderUtils = require('loader-utils');
-const chalk = require('chalk');
-const stripBom = require('strip-bom');
-const glob = require('glob');
+import path from 'path';
+import fs from 'fs';
+import {HTMLHint} from 'htmlhint';
+import loaderUtils from 'loader-utils';
+import chalk from 'chalk';
+import stripBom from 'strip-bom';
+import glob from 'glob';
 
 function formatMessage(message) {
-  let evidence = message.evidence;
-  const line = message.line;
-  const col = message.col;
+  let {evidence} = message;
+  const {line} = message;
+  const {col} = message;
   const detail = typeof message.line === 'undefined' ?
     chalk.yellow('GENERAL') : `${chalk.yellow('L' + line)}${chalk.red(':')}${chalk.yellow('C' + col)}`;
 
@@ -124,8 +124,8 @@ function lint(source, options, webpack, done) {
     }
 
     done(null, source);
-  } catch (err) {
-    done(err);
+  } catch (error) {
+    done(error);
   }
 }
 
@@ -161,7 +161,7 @@ module.exports = function (source) {
         try {
           const htmlHintConfig = JSON.parse(stripBom(configString));
           lint(source, Object.assign(options, htmlHintConfig), this, done);
-        } catch (err) {
+        } catch (error) {
           done(new Error('Could not parse the htmlhint config file'));
         }
       }
