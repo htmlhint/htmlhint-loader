@@ -10,8 +10,13 @@ node_js:
 notifications:
   email: false
 install:
+  - npm install -g codecov
   - npm install
-script:
-  - npm test
 after_success:
   - npm run codecov
+branches:
+  only:
+    - master
+    - /^greenkeeper/.*$/
+  except:
+    - /^v\d+\.\d+\.\d+$/
