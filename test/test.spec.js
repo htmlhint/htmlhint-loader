@@ -1,15 +1,15 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const chai = require('chai');
-const sinon = require('sinon');
-const sinonChai = require('sinon-chai');
-const webpack = require('webpack');
-const stripAnsi = require('strip-ansi');
+import fs from 'fs';
+import path from 'path';
+import chai from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+import webpack from 'webpack';
+import stripAnsi from 'strip-ansi';
 
 chai.use(sinonChai);
-const expect = chai.expect;
+const {expect} = chai;
 
 const webpackBase = {
   mode: 'development',
@@ -48,6 +48,7 @@ describe('htmlhint loader', () => {
 
   it('should emit an error', done => {
     webpack(Object.assign({}, webpackBase, {
+
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -63,7 +64,7 @@ describe('htmlhint loader', () => {
         done(err);
       } else {
         expect(stats.hasErrors()).to.equal(true);
-        expect(stripAnsi(stats.compilation.errors[0].message)).to.equal(expectedErrorMessage);
+        expect(stripAnsi(stats.compilation.errors[0].message)).to.have.string(expectedErrorMessage);
         done();
       }
     });
@@ -88,7 +89,7 @@ describe('htmlhint loader', () => {
       } else {
         expect(stats.hasErrors()).to.equal(false);
         expect(stats.hasWarnings()).to.equal(true);
-        expect(stripAnsi(stats.compilation.warnings[0].message)).to.equal(expectedErrorMessage);
+        expect(stripAnsi(stats.compilation.warnings[0].message)).to.have.string(expectedErrorMessage);
         done();
       }
     });
@@ -145,7 +146,7 @@ describe('htmlhint loader', () => {
         done(err);
       } else {
         expect(stats.hasErrors()).to.equal(true);
-        expect(stripAnsi(stats.compilation.errors[0].message)).to.equal(expectedErrorMessage);
+        expect(stripAnsi(stats.compilation.errors[0].message)).to.have.string(expectedErrorMessage);
         done();
       }
     });
@@ -252,10 +253,10 @@ describe('htmlhint loader', () => {
       ]
     }), (err, stats) => {
       if (err) {
-        done(err);
+        done(stats);
       } else {
         expect(stats.hasErrors()).to.equal(true);
-        expect(stripAnsi(stats.compilation.errors[0].message)).to.equal(expectedErrorMessage);
+        expect(stripAnsi(stats.compilation.errors[0].message)).to.have.string(expectedErrorMessage);
         done();
       }
     });
