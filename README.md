@@ -1,12 +1,39 @@
-# htmlhint-loader
+<h1 align="center">
+  <br>
+  HTMLHint Loader
+  <br>
+</h1>
 
-[![npm version](https://badge.fury.io/js/htmlhint-loader.svg)](http://badge.fury.io/js/htmlhint-loader)
-[![Build Status](https://travis-ci.org/mattlewis92/htmlhint-loader.svg)](https://travis-ci.org/htmlhint/htmlhint-loader)
-[![codecov](https://codecov.io/gh/htmlhint/htmlhint-loader/branch/master/graph/badge.svg)](https://codecov.io/gh/htmlhint/htmlhint-loader)
-[![Dependency Status](https://david-dm.org/mattlewis92/htmlhint-loader.svg)](https://david-dm.org/mattlewis92/htmlhint-loader)
-[![devDependency Status](https://david-dm.org/htmlhint/htmlhint-loader/dev-status.svg)](https://david-dm.org/htmlhint/htmlhint-loader?type=dev)
+<h4 align="center">A Webpack loader for HTMLHint</h4>
 
-> A webpack loader for htmlhint
+<p align="center">
+  <a href="https://travis-ci.org/htmlhint/htmlhint-loader">
+    <img src="https://img.shields.io/travis/htmlhint/htmlhint-loader.svg" alt="Travis Build Status">
+  </a>
+  <a href="https://codecov.io/gh/htmlhint/htmlhint-loader">
+    <img src="https://codecov.io/gh/htmlhint/htmlhint-loader/branch/master/graph/badge.svg" alt="Codecov">
+  </a>
+  <a href="https://www.npmjs.com/package/htmlhint-loader">
+    <img src="https://img.shields.io/npm/dm/htmlhint-loader.svg" alt="NPM count">
+  </a>
+  <img src="https://badgen.net/badge/license/MIT/green" alt="MIT Licence" />
+  <a href="https://discord.gg/nJ6J9CP">
+    <img src="https://img.shields.io/badge/chat-on%20discord-7289da.svg" alt="Chat">
+  </a>
+  <a href="http://roadmap.htmlhint.io/roadmap">
+    <img src="https://img.shields.io/badge/check-our%20roadmap-EE503E.svg" alt="Chat">
+  </a>
+</p>
+
+<p align="center">
+  <a href="#install">How To Use</a> • <a href="/CONTRIBUTING.md">Contributing</a> • <a href="http://roadmap.htmlhint.io/">Roadmap</a> • <a href="https://htmlhint.io">Website</a>
+</p>
+
+## Table of Contents
+
+- **[Install](#install)**
+- **[Usage](#usage)**
+- **[Options](#options)**
 
 ## Install
 
@@ -189,10 +216,10 @@ module.exports = {
 }
 ```
 
-## Credits
-
-I based a lot of this code off the [eslint-loader](https://github.com/MoOx/eslint-loader) and the [gulp htmlhint plugin](https://github.com/bezoerb/gulp-htmlhint), so a big thanks is due to the authors of those modules.
-
 ## Licence
 
-MIT
+Project initially created by [@mattlewis](https://github.com/mattlewis92) and transferred to the [HTMLHint](https://github.com/htmlhint) organization.
+
+<a href="https://htmlhint.io"><img src="https://raw.githubusercontent.com/htmlhint/htmlhint/develop/src/img/htmlhint.png" alt="Logo HTMLHint" width="65"></a>
+
+[MIT License](./LICENSE)

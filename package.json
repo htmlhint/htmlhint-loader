@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thedaviddias/htmlhint-loader.git"
+    "url": "git+https://github.com/htmlhint/htmlhint-loader.git"
   },
   "keywords": [
     "webpack",
@@ -25,12 +25,11 @@
     "lint",
     "html"
   ],
-  "author": "David Dias, Matt Lewis",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thedaviddias/htmlhint-loader/issues"
+    "url": "https://github.com/htmlhint/htmlhint-loader/issues"
   },
-  "homepage": "https://github.com/thedaviddias/htmlhint-loader#readme",
+  "homepage": "https://github.com/htmlhint/htmlhint-loader#readme",
   "dependencies": {
     "chalk": "^2.4.1",
     "glob": "^7.1.3",

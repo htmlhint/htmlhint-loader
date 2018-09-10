@@ -1,6 +1,8 @@
-The MIT License (MIT)
+MIT License
 
-Copyright (c) 2015 Matt Lewis
+Copyright (c) 2015-2018 / Matt Lewis @mattlewis (hello@mattlewis.me)
+
+Copyright (c) 2018 / HTMLHint (htmlhint@gmail.com) / David Dias @thedaviddias (thedaviddias@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
