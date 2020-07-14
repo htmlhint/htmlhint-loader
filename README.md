@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-  <a href="#install">How To Use</a> • <a href="/CONTRIBUTING.md">Contributing</a> • <a href="http://roadmap.htmlhint.io/">Roadmap</a> • <a href="https://htmlhint.io">Website</a>
+  <a href="#install">How To Use</a> • <a href="/CONTRIBUTING.md">Contributing</a> • <a href="http://roadmap.htmlhint.io/">Roadmap</a> • <a href="https://htmlhint.com">Website</a>
 </p>
 
 ## Table of Contents
@@ -220,6 +220,6 @@ module.exports = {
 
 Project initially created by [@mattlewis](https://github.com/mattlewis92) and transferred to the [HTMLHint](https://github.com/htmlhint) organization.
 
-<a href="https://htmlhint.io"><img src="https://raw.githubusercontent.com/htmlhint/htmlhint/develop/src/img/htmlhint.png" alt="Logo HTMLHint" width="65"></a>
+<a href="https://htmlhint.com"><img src="https://raw.githubusercontent.com/htmlhint/htmlhint/develop/src/img/htmlhint.png" alt="Logo HTMLHint" width="65"></a>
 
 [MIT License](./LICENSE)
