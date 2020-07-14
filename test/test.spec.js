@@ -34,9 +34,10 @@ const expectedErrorMessage = '[L1:C1] The html element name of [ BR ] must be in
 
 describe('htmlhint loader', () => {
   it('should not emit an error if there are no rules enabled', done => {
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js')
-    }), (err, stats) => {
+    }, (err, stats) => {
       if (err) {
         done(err);
       } else {
@@ -47,8 +48,8 @@ describe('htmlhint loader', () => {
   });
 
   it('should emit an error', done => {
-    webpack(Object.assign({}, webpackBase, {
-
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -59,7 +60,7 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), (err, stats) => {
+    }, (err, stats) => {
       if (err) {
         done(err);
       } else {
@@ -71,7 +72,8 @@ describe('htmlhint loader', () => {
   });
 
   it('should emit errors as warnings', done => {
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -83,7 +85,7 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), (err, stats) => {
+    }, (err, stats) => {
       if (err) {
         done(err);
       } else {
@@ -99,10 +101,11 @@ describe('htmlhint loader', () => {
     const outputFilename = 'outputReport-[name].txt';
     const expectedOutFilenames = ['outputReport-template.txt', 'outputReport-template-two.txt'];
 
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: [
-        `${__dirname}/fixtures/error/error.js`,
-        `${__dirname}/fixtures/error/error-two.js`
+        path.resolve(__dirname, 'fixtures/error/error.js'),
+        path.resolve(__dirname, 'fixtures/error/error-two.js')
       ],
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -116,13 +119,13 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), err => {
+    }, err => {
       if (err) {
         done(err);
       } else {
-        const file1Content = fs.readFileSync(`${__dirname}/output/${expectedOutFilenames[0]}`, 'utf8');
+        const file1Content = fs.readFileSync(path.resolve(__dirname, 'output', expectedOutFilenames[0]), 'utf8');
         expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(file1Content));
-        const file2Content = fs.readFileSync(`${__dirname}/output/${expectedOutFilenames[1]}`, 'utf8');
+        const file2Content = fs.readFileSync(path.resolve(__dirname, 'output', expectedOutFilenames[1]), 'utf8');
         expect(stripAnsi(expectedErrorMessage)).to.equal(stripAnsi(file2Content));
         done();
       }
@@ -130,7 +133,8 @@ describe('htmlhint loader', () => {
   });
 
   it('should use the htmlhintrc file', done => {
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -141,7 +145,7 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), (err, stats) => {
+    }, (err, stats) => {
       if (err) {
         done(err);
       } else {
@@ -153,7 +157,8 @@ describe('htmlhint loader', () => {
   });
 
   it('should handle the htmlhintrc file being invalid json', done => {
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -164,9 +169,9 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), (err, stats) => {
+    }, (err, stats) => {
       expect(err).to.equal(null);
-      expect(stats.compilation.errors[0].message.indexOf('Could not parse the htmlhint config file') > -1).to.equal(true);
+      expect(stats.compilation.errors[0].message.includes('Could not parse the htmlhint config file')).to.equal(true);
       done();
     });
   });
@@ -174,7 +179,8 @@ describe('htmlhint loader', () => {
   it('should allow custom rules', done => {
     const ruleCalled = sinon.spy();
 
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -190,7 +196,7 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), () => {
+    }, () => {
       expect(ruleCalled).to.have.been.callCount(1);
       done();
     });
@@ -199,7 +205,8 @@ describe('htmlhint loader', () => {
   it('should allow rulesDir', done => {
     const ruleCalled = sinon.spy();
 
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -211,14 +218,15 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), () => {
+    }, () => {
       expect(ruleCalled).to.have.been.callCount(1);
       done();
     });
   });
 
   it('should handle utf-8 BOM encoded configs', done => {
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -229,7 +237,7 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), (err, stats) => {
+    }, (err, stats) => {
       if (err) {
         done(err);
       } else {
@@ -240,7 +248,8 @@ describe('htmlhint loader', () => {
   });
 
   it('should allow absolute config file paths', done => {
-    webpack(Object.assign({}, webpackBase, {
+    webpack({
+      ...webpackBase,
       entry: path.join(__dirname, 'fixtures/error/error.js'),
       plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -251,7 +260,7 @@ describe('htmlhint loader', () => {
           }
         })
       ]
-    }), (err, stats) => {
+    }, (err, stats) => {
       if (err) {
         done(stats);
       } else {

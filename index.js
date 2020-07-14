@@ -64,9 +64,9 @@ function loadCustomRules(options) {
 function loadRule(filepath, options) {
   options = options || {};
   filepath = path.resolve(filepath);
-  const ruleObj = require(filepath); // eslint-disable-line import/no-dynamic-require
-  const ruleOption = options[ruleObj.id]; // We can pass a value to the rule
-  ruleObj.rule(HTMLHint, ruleOption);
+  const ruleObject = require(filepath);
+  const ruleOption = options[ruleObject.id]; // We can pass a value to the rule
+  ruleObject.rule(HTMLHint, ruleOption);
 }
 
 function lint(source, options, webpack, done) {
@@ -74,6 +74,7 @@ function lint(source, options, webpack, done) {
     if (options.customRules) {
       options.customRules.forEach(rule => HTMLHint.addRule(rule));
     }
+
     if (options.rulesDir) {
       loadCustomRules(options);
     }
@@ -99,6 +100,7 @@ function lint(source, options, webpack, done) {
         } else {
           reportOutput = messages;
         }
+
         const filePath = loaderUtils.interpolateName(webpack, options.outputReport.filePath, {
           content: report.map(r => r.filePath).join('\n')
         });
@@ -131,8 +133,8 @@ function lint(source, options, webpack, done) {
 
 module.exports = function (source) {
   const DEFAULT_CONFIG_FILE = '.htmlhintrc';
-  const options = Object.assign(
-    { // Loader defaults
+  const options = {
+    ...{ // Loader defaults
       formatter: defaultFormatter,
       emitAs: null, // Can be either warning or error
       failOnError: false,
@@ -140,9 +142,9 @@ module.exports = function (source) {
       customRules: [],
       configFile: DEFAULT_CONFIG_FILE
     },
-    this.options && this.options.htmlhint ? this.options.htmlhint : {}, // User defaults
-    loaderUtils.getOptions(this) // Loader query string
-  );
+    ...(this.options && this.options.htmlhint ? this.options.htmlhint : {}), // User defaults
+    ...loaderUtils.getOptions(this) // Loader query string
+  };
 
   this.cacheable();
 
@@ -161,7 +163,7 @@ module.exports = function (source) {
         try {
           const htmlHintConfig = JSON.parse(stripBom(configString));
           lint(source, Object.assign(options, htmlHintConfig), this, done);
-        } catch (error) {
+        } catch {
           done(new Error('Could not parse the htmlhint config file'));
         }
       }
@@ -170,6 +172,7 @@ module.exports = function (source) {
     if (configFilePath !== path.join(process.cwd(), DEFAULT_CONFIG_FILE)) {
       console.warn(`Could not find htmlhint config file in ${configFilePath}`);
     }
+
     lint(source, options, this, done);
   }
 };
