@@ -3,10 +3,9 @@ cache:
   directories:
     - ~/.npm
 node_js:
-  - '10'
-  - '9'
-  - '8'
-  - '6'
+  - "14"
+  - "12"
+  - "10"
 notifications:
   email: false
 install:
