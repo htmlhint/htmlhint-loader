@@ -41,7 +41,7 @@ describe('htmlhint loader', () => {
         done(err);
       } else {
         expect(stats.hasErrors()).to.equal(false);
-        setTimeout(done, 1500);
+        done();
       }
     });
   });
