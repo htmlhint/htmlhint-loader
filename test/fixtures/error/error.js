@@ -1,1 +1,1 @@
-var template = require('./template.html');
+var template = require('./template.html')

@@ -46,13 +46,15 @@ npm install htmlhint-loader
 ```javascript
 module.exports = {
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.html/,
-      loader: 'htmlhint-loader',
-      exclude: /node_modules/
-    }]
-  }
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.html/,
+        loader: 'htmlhint-loader',
+        exclude: /node_modules/,
+      },
+    ],
+  },
 }
 ```
 
@@ -65,13 +67,15 @@ You can directly pass some [htmlhint rules](https://github.com/htmlhint/HTMLHint
 ```javascript
 module.exports = {
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.html/,
-      loader: 'htmlhint-loader?{tagname-lowercase: true}',
-      exclude: /node_modules/
-    }]
-  }
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.html/,
+        loader: 'htmlhint-loader?{tagname-lowercase: true}',
+        exclude: /node_modules/,
+      },
+    ],
+  },
 }
 ```
 
@@ -80,24 +84,27 @@ module.exports = {
 ```javascript
 module.exports = {
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.html/,
-      loader: 'htmlhint-loader',
-      exclude: /node_modules/,
-      options: {
-        configFile: 'path/.htmlhintrc'
-      }
-    }]
-  }
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.html/,
+        loader: 'htmlhint-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: 'path/.htmlhintrc',
+        },
+      },
+    ],
+  },
 }
 ```
 
 #### `configFile`
 
-A path to a json file containing the set of htmlhint rules you would like applied to this project. *By default all rules are turned off and it is up to you to enable them.*
+A path to a json file containing the set of htmlhint rules you would like applied to this project. _By default all rules are turned off and it is up to you to enable them._
 
 Example file:
+
 ```javascript
 {
   "tagname-lowercase": true,
@@ -125,25 +132,30 @@ Whether to force webpack to fail the build on a htmlhint warning
 #### `customRules`
 
 Any custom rules you would like added to htmlhint. Specify as an array like so:
+
 ```javascript
 module.exports = {
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.html/,
-      loader: 'htmlhint-loader',
-      exclude: /node_modules/,
-      options: {
-        customRules: [{
-          id: 'my-rule-name',
-          description: 'Example description',
-          init: function(parser, reporter) {
-            //see htmlhint docs / source for what to put here
-          }
-        }]
-      }
-    }]
-  }
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.html/,
+        loader: 'htmlhint-loader',
+        exclude: /node_modules/,
+        options: {
+          customRules: [
+            {
+              id: 'my-rule-name',
+              description: 'Example description',
+              init: function (parser, reporter) {
+                //see htmlhint docs / source for what to put here
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
 }
 ```
 
@@ -151,43 +163,50 @@ module.exports = {
 
 You can add a path to a folder containing your custom rules.
 See below for the format of the rule, it is not the same as HTMLHINT - you can pass a value to a rule.
+
 ```javascript
 // webpack config
 module.exports = {
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.html/,
-      loader: 'htmlhint-loader',
-      exclude: /node_modules/,
-      options: {
-        rulesDir: path.join(__dirname, 'rules/'),
-        'my-new-rule': 'this is pass to the rule (option)'
-      }
-    }]
-  }
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.html/,
+        loader: 'htmlhint-loader',
+        exclude: /node_modules/,
+        options: {
+          rulesDir: path.join(__dirname, 'rules/'),
+          'my-new-rule': 'this is pass to the rule (option)',
+        },
+      },
+    ],
+  },
 }
 ```
 
 ```javascript
 // rules/myNewRule.js
-const id = 'my-new-rule';
+const id = 'my-new-rule'
 
 module.exports = {
   id,
-  rule: function(HTMLHint, option /* = 'this is pass to the rule (option)' */) {
+  rule: function (
+    HTMLHint,
+    option /* = 'this is pass to the rule (option)' */
+  ) {
     HTMLHint.addRule({
       id,
       description: 'my-new-rule',
       init: () => {
         //see htmlhint docs / source for what to put here
-      }
-    });
-  }
-};
+      },
+    })
+  },
+}
 ```
 
 ##### `outputReport` (default: `false`)
+
 Write the output of the errors to a file, for example a checkstyle xml file for use for reporting on Jenkins CI
 
 The `filePath` is relative to the webpack config: output.path
@@ -197,22 +216,24 @@ You can pass in a different formatter for the output file, if none is passed in 
 ```javascript
 module.exports = {
   module: {
-    rules: [{
-      enforce: 'pre',
-      test: /\.html/,
-      loader: 'htmlhint-loader',
-      exclude: /node_modules/,
-      options: {
-        outputReport: {
-          filePath: 'checkstyle-[name].xml',
-          formatter(messages) {
-            // convert messages to a string that will be written to the file
-            return messagesFormattedToString;
-          }
-        }
-      }
-    }]
-  }
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.html/,
+        loader: 'htmlhint-loader',
+        exclude: /node_modules/,
+        options: {
+          outputReport: {
+            filePath: 'checkstyle-[name].xml',
+            formatter(messages) {
+              // convert messages to a string that will be written to the file
+              return messagesFormattedToString
+            },
+          },
+        },
+      },
+    ],
+  },
 }
 ```
 
